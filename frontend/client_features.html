@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Digital ID Cards - Apex Group Of Schools</title>
+    <link rel="icon" type="image/png" href="images/logo.jpeg">
+    <link rel="stylesheet" href="style.css?v=20260803-student-digital-id-cards">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            background:
+                radial-gradient(circle at top left, rgba(29, 78, 216, 0.08), transparent 24%),
+                linear-gradient(180deg, #f7fbff 0%, #ffffff 100%);
+        }
+
+        .main-content {
+            background: rgba(255, 255, 255, 0.92);
+            min-height: calc(100vh - 24px);
+        }
+
+        .blank-shell {
+            min-height: calc(100vh - 88px);
+            display: grid;
+            align-content: start;
+            padding: 0.25rem 0.15rem 1rem;
+        }
+
+        .blank-shell h1 {
+            margin: 0;
+            color: #0f172a;
+            font-size: clamp(1.9rem, 3vw, 2.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo-section">
+                <img class="sidebar-logo-img" src="images/logo.jpeg" alt="Apex Group Of Schools logo">
+            </div>
+            <nav class="nav-links"></nav>
+            <a href="settings.html" class="user-profile">
+                <div class="avatar">AD</div>
+                <div class="user-info">
+                    <h4>Admin User</h4>
+                    <p>Principal</p>
+                </div>
+            </a>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="blank-shell">
+                    <h1>Student digital ID cards</h1>
+                </div>
+            </header>
+        </main>
+    </div>
+
+    <script src="auth.js?v=20260803-student-digital-id-cards"></script>
+    <script src="script.js?v=20260803-student-digital-id-cards"></script>
+    <script>
+        if (window.lucide && window.lucide.createIcons) window.lucide.createIcons();
+    </script>
+</body>
+
+</html>

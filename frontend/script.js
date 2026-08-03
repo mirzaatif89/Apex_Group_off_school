@@ -556,6 +556,7 @@ async function initialSQLSync() {
             loadTeacherAttendanceFromSQL(),
             loadTeacherSalariesFromSQL()
         ]);
+        if (typeof updateDashboardStats === 'function' && isCurrentPage('dashboard.html')) updateDashboardStats();
     } catch (e) {
         console.warn("SQL Server Connection Failed: Ensure 'node server.js' is running and MySQL is active.");
         console.log("SQL Initial Sync skipped (server offline). Using LocalStorage fallback.");
@@ -839,7 +840,6 @@ document.addEventListener('DOMContentLoaded', () => {
     populateCampusDropdowns();
     [
         ensureBranchRegistrationNav,
-        ensureBannersNav,
         ensureSchedulingNav,
         ensureAdminRecordsNav,
         ensureFacilityNav,
@@ -3186,43 +3186,6 @@ function applyBranchScopedStudentsView() {
     }
 }
 
-function ensureBannersNav() {
-    const navLinks = document.querySelector('.nav-links');
-    const loggedInUser = getLoggedInUser();
-    if (!navLinks || !loggedInUser) return;
-    if (navLinks.querySelector('[data-banners-link]')) return;
-
-    const permissions = (() => {
-        try {
-            return JSON.parse(sessionStorage.getItem('eduCore_permissions_config') || '{}');
-        } catch (error) {
-            return {};
-        }
-    })();
-    const canAccessBanners = loggedInUser.role === 'Admin' ||
-        loggedInUser.role === 'Principal' ||
-        (window.eduCoreAuth && window.eduCoreAuth.canAccessPage(loggedInUser, permissions, 'banners.html'));
-
-    if (!canAccessBanners) return;
-
-    const currentPage = getCurrentPageName();
-    const studentsLink = Array.from(navLinks.querySelectorAll('a[href]'))
-        .find((link) => normalizeClientPageName(link.getAttribute('href') || '') === 'students.html');
-    const bannersLink = document.createElement('a');
-    bannersLink.href = toRoutePath('banners.html');
-    bannersLink.className = `nav-item${currentPage === 'banners.html' ? ' active' : ''}`;
-    bannersLink.dataset.bannersLink = 'true';
-    bannersLink.innerHTML = '<i data-lucide="image"></i><span>Banners</span>';
-
-    if (studentsLink) {
-        studentsLink.insertAdjacentElement('afterend', bannersLink);
-    } else {
-        navLinks.appendChild(bannersLink);
-    }
-
-    if (window.lucide) window.lucide.createIcons();
-}
-
 function ensureStudentRecordsNav() {
     const navLinks = document.querySelector('.nav-links');
     const loggedInUser = getLoggedInUser();
@@ -3331,7 +3294,6 @@ function ensureAdminSidebarCompleteness() {
     const currentPage = getCurrentPageName();
     const completeLinks = [
         { page: 'dashboard.html', label: 'Dashboard', icon: 'layout-dashboard' },
-        { page: 'banners.html', label: 'Banners', icon: 'image' },
         { page: 'classes.html', label: 'Classes', icon: 'school' },
         { page: 'students.html', label: 'Students', icon: 'users' },
         { page: 'student_scheduling.html', label: 'Students Scheduling', icon: 'calendar-clock' },
@@ -3430,7 +3392,6 @@ function renderAdminSidebarSequence() {
 
     const navItems = [
         { type: 'link', page: 'dashboard.html', label: 'Dashboard', icon: 'layout-dashboard' },
-        { type: 'link', page: 'banners.html', label: 'Banners', icon: 'image' },
         { type: 'link', page: 'classes.html', label: 'Classes', icon: 'school' },
         { type: 'link', page: 'students.html', label: 'Students', icon: 'users' },
         { type: 'link', page: 'student_scheduling.html', label: 'Students Scheduling', icon: 'calendar-clock' },
@@ -4917,6 +4878,7 @@ function updateDashboardStats() {
     if (document.getElementById('dashStaffCount')) document.getElementById('dashStaffCount').innerText = staffMembers.length || '0';
 
     updateDashboardRevenueStats(students);
+    renderDashboardSchoolHighlights(students, teachers, staffMembers);
 
     updateDashboardComplaintStats();
     updateDashboardBannerStats();
@@ -4964,6 +4926,137 @@ async function updateDashboardBannerStats(records) {
         if (detailEl) detailEl.innerHTML = '<i data-lucide="image" size="16"></i> Unable to load';
         if (window.lucide) window.lucide.createIcons();
     }
+}
+
+function getDashboardBirthdayDateLabel(dateValue) {
+    const date = new Date(dateValue);
+    if (Number.isNaN(date.getTime())) return '-';
+    return date.toLocaleDateString('en-PK', { month: 'short', day: 'numeric' });
+}
+
+function getDashboardUpcomingBirthdayEntries(records = [], daysAhead = 30) {
+    const today = new Date();
+    const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const limit = Number(daysAhead) > 0 ? Number(daysAhead) : 30;
+    const items = [];
+
+    (Array.isArray(records) ? records : []).forEach((record) => {
+        const rawDob = String(record?.dob || record?.dateOfBirth || record?.birthDate || '').trim();
+        if (!rawDob) return;
+        const dob = new Date(rawDob);
+        if (Number.isNaN(dob.getTime())) return;
+
+        const candidateThisYear = new Date(todayStart.getFullYear(), dob.getMonth(), dob.getDate());
+        const nextBirthday = candidateThisYear < todayStart
+            ? new Date(todayStart.getFullYear() + 1, dob.getMonth(), dob.getDate())
+            : candidateThisYear;
+        const diffDays = Math.ceil((nextBirthday - todayStart) / 86400000);
+        if (diffDays < 0 || diffDays > limit) return;
+
+        items.push({
+            name: String(record?.fullName || record?.studentName || record?.name || 'Person'),
+            label: getDashboardBirthdayDateLabel(nextBirthday),
+            dayOffset: diffDays,
+            className: String(record?.classGrade || record?.designation || record?.subject || record?.campusName || 'School')
+        });
+    });
+
+    return items.sort((a, b) => a.dayOffset - b.dayOffset);
+}
+
+function getDashboardTodayFeePaidEntries(students = []) {
+    const todayKey = new Date().toISOString().slice(0, 10);
+    const grouped = new Map();
+
+    (Array.isArray(students) ? students : []).forEach((student) => {
+        const paymentDate = String(student?.paymentDate || '').trim();
+        const paymentKey = paymentDate ? new Date(paymentDate).toISOString().slice(0, 10) : '';
+        if (paymentKey !== todayKey) return;
+        if (!['Paid', 'Zero Fee Student'].includes(String(student?.feesStatus || '').trim())) return;
+
+        const className = String(student?.classGrade || 'Unassigned').trim() || 'Unassigned';
+        const entry = grouped.get(className) || { className, count: 0, total: 0 };
+        entry.count += 1;
+        entry.total += Math.max(parseDashboardAmount(student?.monthlyFee || 0), 0);
+        grouped.set(className, entry);
+    });
+
+    return Array.from(grouped.values()).sort((a, b) => b.count - a.count || a.className.localeCompare(b.className));
+}
+
+function getDashboardTodayAbsentEntries(students = []) {
+    const todayKey = new Date().toISOString().slice(0, 10);
+    const attendanceStore = normalizeStudentAttendanceStore(getData(STORAGE_KEY_STUDENT_ATTENDANCE_CACHE));
+    const grouped = new Map();
+
+    (Array.isArray(students) ? students : []).forEach((student) => {
+        const className = String(student?.classGrade || 'Unassigned').trim() || 'Unassigned';
+        const records = Array.isArray(attendanceStore?.[student?.id]) ? attendanceStore[student.id] : [];
+        const todayRecord = records.find((record) => String(record?.date || '') === todayKey);
+        if (!todayRecord || String(todayRecord.status || '') !== 'Absent') return;
+
+        const entry = grouped.get(className) || { className, count: 0 };
+        entry.count += 1;
+        grouped.set(className, entry);
+    });
+
+    return Array.from(grouped.values()).sort((a, b) => b.count - a.count || a.className.localeCompare(b.className));
+}
+
+function renderDashboardSchoolHighlights(students = [], teachers = [], staffMembers = []) {
+    const studentRecords = Array.isArray(students) ? students : [];
+    const teacherRecords = Array.isArray(teachers) ? teachers : [];
+    const staffRecords = Array.isArray(staffMembers) ? staffMembers : [];
+
+    const upcomingBirthdays = getDashboardUpcomingBirthdayEntries([
+        ...studentRecords,
+        ...teacherRecords,
+        ...staffRecords
+    ], 30);
+
+    const feePaidToday = getDashboardTodayFeePaidEntries(studentRecords);
+    const absentToday = getDashboardTodayAbsentEntries(studentRecords);
+
+    const birthdayBadge = document.getElementById('dashBirthdaysBadge');
+    if (birthdayBadge) birthdayBadge.textContent = '30 Days';
+    const birthdayCountEl = document.getElementById('dashUpcomingBirthdaysCount');
+    const birthdayCountLabelEl = document.getElementById('dashBirthdaysCountLabel');
+    if (birthdayCountEl) birthdayCountEl.textContent = String(upcomingBirthdays.length);
+    if (birthdayCountLabelEl) birthdayCountLabelEl.textContent = `${upcomingBirthdays.length} birthday${upcomingBirthdays.length === 1 ? '' : 's'}`;
+
+    renderDashboardList('dashUpcomingBirthdays', upcomingBirthdays.map((item) => `
+        <div class="dashboard-list-item">
+            <div>
+                <strong>${escapeHtml(item.name)}</strong>
+                <span>${escapeHtml(item.className)} | ${escapeHtml(item.label)}${item.dayOffset === 0 ? ' | Today' : ` | in ${item.dayOffset} day${item.dayOffset === 1 ? '' : 's'}`}</span>
+            </div>
+            <div class="item-value">${item.dayOffset === 0 ? 'Today' : `${item.dayOffset}d`}</div>
+        </div>
+    `), 'No upcoming birthdays in the next 30 days.');
+
+    const paidTodayBadge = document.getElementById('dashPaidTodayBadge');
+    if (paidTodayBadge) paidTodayBadge.textContent = 'Today';
+    renderDashboardList('dashPaidTodayByClass', feePaidToday.map((item) => `
+        <div class="dashboard-list-item">
+            <div>
+                <strong>${escapeHtml(item.className)}</strong>
+                <span>${escapeHtml(item.count)} student${item.count === 1 ? '' : 's'} paid today</span>
+            </div>
+            <div class="item-value">${formatDashboardCurrency(item.total)}</div>
+        </div>
+    `), 'No fee payments recorded today.');
+
+    const absentTodayBadge = document.getElementById('dashAbsentTodayBadge');
+    if (absentTodayBadge) absentTodayBadge.textContent = 'Today';
+    renderDashboardList('dashAbsentTodayByClass', absentToday.map((item) => `
+        <div class="dashboard-list-item">
+            <div>
+                <strong>${escapeHtml(item.className)}</strong>
+                <span>${escapeHtml(item.count)} student${item.count === 1 ? '' : 's'} absent today</span>
+            </div>
+            <div class="item-value">${item.count}</div>
+        </div>
+    `), 'No absent students recorded today.');
 }
 
 function initializeDashboardHome() {

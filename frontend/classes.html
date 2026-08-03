@@ -113,6 +113,299 @@
             flex-wrap: wrap;
         }
 
+        .class-toolbar {
+            position: relative;
+        }
+
+        .class-toolbar-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            padding: 0.8rem 1rem;
+            border-radius: 999px;
+            border: 1px solid rgba(32, 176, 164, 0.18);
+            background: linear-gradient(135deg, rgba(32, 176, 164, 0.14), rgba(12, 74, 110, 0.08));
+            color: var(--primary-color);
+            font-weight: 700;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .class-toolbar-btn:hover {
+            transform: translateY(-1px);
+            border-color: rgba(32, 176, 164, 0.35);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+        }
+
+        .class-toolbar-menu {
+            position: absolute;
+            right: 0;
+            top: calc(100% + 0.6rem);
+            min-width: 190px;
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 1rem;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
+            padding: 0.45rem;
+            display: none;
+            z-index: 40;
+            backdrop-filter: blur(12px);
+        }
+
+        .class-toolbar.open .class-toolbar-menu {
+            display: grid;
+            gap: 0.35rem;
+        }
+
+        .class-toolbar-menu button {
+            width: 100%;
+            border: 0;
+            border-radius: 0.8rem;
+            padding: 0.78rem 0.9rem;
+            text-align: left;
+            background: transparent;
+            color: var(--text-primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .class-toolbar-menu button:hover {
+            background: rgba(32, 176, 164, 0.1);
+            color: var(--primary-color);
+        }
+
+        .class-meta {
+            margin-top: 0.5rem;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+
+        .class-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.4);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.2rem;
+            z-index: 1200;
+            backdrop-filter: blur(5px);
+        }
+
+        .class-modal-overlay.active {
+            display: flex;
+        }
+
+        .class-modal {
+            width: min(760px, 100%);
+            max-height: 90vh;
+            overflow: auto;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 252, 255, 0.98));
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 1.5rem;
+            box-shadow: 0 24px 70px rgba(15, 23, 42, 0.2);
+            padding: 1.2rem;
+        }
+
+        .class-modal-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .class-modal-eyebrow {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--primary-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .class-modal-title {
+            margin: 0;
+            font-size: 1.55rem;
+            color: var(--text-primary);
+        }
+
+        .class-modal-close {
+            border: 0;
+            background: rgba(15, 23, 42, 0.06);
+            color: var(--text-primary);
+            border-radius: 999px;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .class-modal-tabs {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .class-modal-tab {
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            background: white;
+            color: var(--text-primary);
+            border-radius: 999px;
+            padding: 0.65rem 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .class-modal-tab.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .class-manager-form {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .class-form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .class-form-field {
+            display: grid;
+            gap: 0.45rem;
+        }
+
+        .class-form-field label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .class-form-field input,
+        .class-form-field select {
+            width: 100%;
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            border-radius: 0.95rem;
+            padding: 0.82rem 0.95rem;
+            background: white;
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .class-form-field input:focus,
+        .class-form-field select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(32, 176, 164, 0.12);
+        }
+
+        .class-section-list {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .section-slot {
+            display: grid;
+            gap: 0.45rem;
+            padding: 0.9rem;
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.82);
+        }
+
+        .section-slot span {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .class-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .class-modal-actions .btn {
+            min-width: 140px;
+        }
+
+        .promotion-modal {
+            width: min(980px, 100%);
+        }
+
+        .promotion-status {
+            padding: 0.9rem 1rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            background: rgba(255, 255, 255, 0.88);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .promotion-table-wrap {
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 1rem;
+            overflow: hidden;
+            background: white;
+        }
+
+        .promotion-table-wrap table {
+            margin: 0;
+        }
+
+        .promotion-table-wrap thead th {
+            background: #f8fbff;
+        }
+
+        .promotion-select-all-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.9rem 1rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+            background: rgba(248, 251, 255, 0.72);
+        }
+
+        .promotion-select-all-row label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .promotion-count-pill {
+            padding: 0.38rem 0.72rem;
+            border-radius: 999px;
+            background: rgba(32, 176, 164, 0.12);
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 0.82rem;
+        }
+
+        .promotion-empty {
+            padding: 1.25rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 860px) {
+            .class-form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .promotion-summary {
             padding: 0.8rem 1rem;
             border-radius: var(--radius-md);
@@ -160,6 +453,29 @@
                     <i data-lucide="school"></i>
                     <span>Classes</span>
                 </a>
+                <div class="nav-dropdown" data-requested-sidebar-dropdown="true">
+                    <button type="button" class="nav-item nav-dropdown-toggle">
+                        <span class="nav-item-main">
+                            <i data-lucide="layers-3"></i>
+                            <span>Manage Classes &amp; Sections</span>
+                        </span>
+                        <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+                    </button>
+                    <div class="nav-submenu">
+                        <a href="assign_sections.html" class="nav-subitem">
+                            <i data-lucide="move-horizontal"></i>
+                            <span>Assign Sections</span>
+                        </a>
+                        <a href="sections_wise_subjects.html" class="nav-subitem">
+                            <i data-lucide="book-open-check"></i>
+                            <span>Sections wise Subjects</span>
+                        </a>
+                        <a href="sections_report.html" class="nav-subitem">
+                            <i data-lucide="folder-open"></i>
+                            <span>Sections Report</span>
+                        </a>
+                    </div>
+                </div>
                 <a href="fees.html" class="nav-item">
                     <i data-lucide="credit-card"></i>
                     <span>Fees</span>
@@ -212,6 +528,23 @@
             <header class="header">
                 <h1>Class Management</h1>
                 <div class="header-actions">
+                    <div class="class-toolbar" id="classToolbar">
+                        <button type="button" class="class-toolbar-btn" id="classToolbarButton" onclick="toggleClassToolbar(event)">
+                            <i data-lucide="sliders-horizontal" size="18"></i>
+                            Class Actions
+                        </button>
+                        <div class="class-toolbar-menu" id="classToolbarMenu">
+                            <button type="button" onclick="openClassManagerModal('create')">
+                                <i data-lucide="plus-circle" size="16"></i> Create Class
+                            </button>
+                            <button type="button" onclick="openClassManagerModal('edit')">
+                                <i data-lucide="pencil-line" size="16"></i> Edit Class
+                            </button>
+                            <button type="button" onclick="openPromotionModal()">
+                                <i data-lucide="move-up-right" size="16"></i> Promote Students
+                            </button>
+                        </div>
+                    </div>
                     <div class="search-bar">
                         <i data-lucide="search" size="18" style="color: var(--text-secondary);"></i>
                         <input type="text" id="classSearchInput" placeholder="Search students...">
@@ -229,6 +562,115 @@
                     </div>
                 </div>
             </header>
+
+            <div class="class-modal-overlay" id="classManagerOverlay" aria-hidden="true">
+                <div class="class-modal" role="dialog" aria-modal="true" aria-labelledby="classModalTitle">
+                    <div class="class-modal-header">
+                        <div>
+                            <div class="class-modal-eyebrow">Class Setup</div>
+                            <h2 class="class-modal-title" id="classModalTitle">Create Class</h2>
+                        </div>
+                        <button type="button" class="class-modal-close" onclick="closeClassManagerModal()" aria-label="Close class form">
+                            <i data-lucide="x" size="18"></i>
+                        </button>
+                    </div>
+
+                    <div class="class-modal-tabs">
+                        <button type="button" class="class-modal-tab active" id="classCreateTab" onclick="switchClassManagerMode('create')">Create Class</button>
+                        <button type="button" class="class-modal-tab" id="classEditTab" onclick="switchClassManagerMode('edit')">Edit Class</button>
+                    </div>
+
+                    <form id="classManagerForm" class="class-manager-form">
+                        <input type="hidden" id="classManagerMode" value="create">
+                        <input type="hidden" id="classManagerId" value="">
+
+                        <div class="class-form-grid">
+                            <div class="class-form-field" id="classSelectField" style="display: none;">
+                                <label for="classManagerSelect">Select Class</label>
+                                <select id="classManagerSelect"></select>
+                            </div>
+                            <div class="class-form-field">
+                                <label for="classManagerName">Class Name</label>
+                                <input type="text" id="classManagerName" placeholder="e.g. Class Eleven">
+                            </div>
+                            <div class="class-form-field">
+                                <label for="classManagerSectionCount">Number of Sections</label>
+                                <select id="classManagerSectionCount"></select>
+                            </div>
+                        </div>
+
+                        <div class="class-section-list" id="classSectionSlots"></div>
+
+                        <div class="class-modal-actions">
+                            <button type="button" class="btn btn-outline" onclick="closeClassManagerModal()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">
+                                <i data-lucide="save" size="16"></i> Save Class
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="class-modal-overlay" id="promotionModalOverlay" aria-hidden="true">
+                <div class="class-modal promotion-modal" role="dialog" aria-modal="true" aria-labelledby="promotionModalTitle">
+                    <div class="class-modal-header">
+                        <div>
+                            <div class="class-modal-eyebrow">Student Movement</div>
+                            <h2 class="class-modal-title" id="promotionModalTitle">Promote Students</h2>
+                        </div>
+                        <button type="button" class="class-modal-close" onclick="closePromotionModal()" aria-label="Close promotion form">
+                            <i data-lucide="x" size="18"></i>
+                        </button>
+                    </div>
+
+                    <form id="promotionForm" class="class-manager-form">
+                        <div class="class-form-grid">
+                            <div class="class-form-field">
+                                <label for="promotionFromClass">From Class</label>
+                                <select id="promotionFromClass"></select>
+                            </div>
+                            <div class="class-form-field">
+                                <label for="promotionTargetClass">Target Class</label>
+                                <select id="promotionTargetClass"></select>
+                            </div>
+                        </div>
+
+                        <div class="promotion-status" id="promotionModalStatus">Choose a source class to load its students.</div>
+
+                        <div class="promotion-table-wrap">
+                            <div class="promotion-select-all-row">
+                                <label>
+                                    <input type="checkbox" id="promotionSelectAllStudents">
+                                    Select all students
+                                </label>
+                                <span class="promotion-count-pill" id="promotionStudentCountPill">0 students</span>
+                            </div>
+                            <table id="promotionStudentsTable">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 56px;"></th>
+                                        <th>Roll No</th>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Current Class</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="promotionStudentsBody"></tbody>
+                            </table>
+                            <div id="promotionNoStudentsMessage" class="promotion-empty" style="display:none;">
+                                No students found in the selected class.
+                            </div>
+                        </div>
+
+                        <div class="class-modal-actions">
+                            <button type="button" class="btn btn-outline" onclick="closePromotionModal()">Cancel</button>
+                            <button type="button" class="btn btn-primary" onclick="promoteStudentsFromModal()">
+                                <i data-lucide="arrow-right" size="16"></i> Promote Students
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <!-- Classes Grid View -->
             <div id="classesGridView">
@@ -317,11 +759,527 @@
     <script>
         lucide.createIcons();
 
-        // Initialize classes view
+        const DEFAULT_CLASS_LIST = [
+            { id: 'play', name: 'Play Group', keywords: ['play', 'pg', 'playgroup', 'play group', 'play-group'], sections: [] },
+            { id: 'kg1', name: 'KG1', keywords: ['kg1', 'nursery', 'nursary', 'nur'], sections: [] },
+            { id: 'kg2', name: 'KG2', keywords: ['kg2', 'prep', 'preschool', 'pre'], sections: [] },
+            { id: '1', name: 'Class One', keywords: ['1', 'one', '1st', 'class 1', 'class one'], sections: [] },
+            { id: '2', name: 'Class Two', keywords: ['2', 'two', '2nd', 'class 2', 'class two'], sections: [] },
+            { id: '3', name: 'Class Three', keywords: ['3', 'three', '3rd', 'class 3', 'class three'], sections: [] },
+            { id: '4', name: 'Class Four', keywords: ['4', 'four', '4th', 'class 4', 'class four'], sections: [] },
+            { id: '5', name: 'Class Five', keywords: ['5', 'five', '5th', 'class 5', 'class five'], sections: [] },
+            { id: '6', name: 'Class Six', keywords: ['6', 'six', '6th', 'class 6', 'class six'], sections: [] },
+            { id: '7', name: 'Class Seven', keywords: ['7', 'seven', '7th', 'class 7', 'class seven'], sections: [] },
+            { id: '8', name: 'Class Eight', keywords: ['8', 'eight', '8th', 'class 8', 'class eight'], sections: [] },
+            { id: '9', name: 'Class Nine', keywords: ['9', 'nine', '9th', 'class 9', 'class nine'], sections: [] },
+            { id: '10', name: 'Class Ten', keywords: ['10', 'ten', '10th', 'class 10', 'class ten'], sections: [] },
+            { id: 'graduate', name: 'Graduate', keywords: ['graduate', 'graduated', 'alumni', 'passed out'], sections: [] },
+        ];
+        const CLASS_SECTION_OPTIONS = Array.from({ length: 26 }, (_, index) => String.fromCharCode(65 + index));
+        let classList = [];
+
+        function normalizeClassText(value) {
+            return String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
+        }
+
+        function buildClassKeywords(name) {
+            const normalized = normalizeClassText(name).replace(/[-_]+/g, ' ');
+            const compact = normalized.replace(/\s+/g, ' ').trim();
+            const keywords = new Set();
+
+            if (compact) keywords.add(compact);
+            if (compact && !compact.startsWith('class ')) keywords.add(`class ${compact}`);
+            if (compact.startsWith('class ')) keywords.add(compact.replace(/^class\s+/, ''));
+
+            return Array.from(keywords);
+        }
+
+        function cloneClassRecord(classRecord) {
+            return {
+                ...classRecord,
+                keywords: Array.isArray(classRecord.keywords) ? [...classRecord.keywords] : buildClassKeywords(classRecord.name),
+                sections: Array.isArray(classRecord.sections)
+                    ? [...classRecord.sections]
+                    : String(classRecord.section || '').split(',').map((item) => item.trim()).filter(Boolean)
+            };
+        }
+
+        function loadClassList() {
+            const stored = getData(STORAGE_KEY_CLASSES);
+            const normalized = Array.isArray(stored)
+                ? stored.map((item) => {
+                    const name = String(item?.name || item?.className || item?.title || '').trim();
+                    if (!name) return null;
+                    const sections = Array.isArray(item?.sections)
+                        ? item.sections.map((section) => String(section || '').trim()).filter(Boolean)
+                        : String(item?.section || '').split(',').map((section) => section.trim()).filter(Boolean);
+
+                    return {
+                        id: String(item?.id || generateUniqueRecordId('CLS')),
+                        name,
+                        keywords: Array.isArray(item?.keywords) && item.keywords.length ? item.keywords : buildClassKeywords(name),
+                        sections,
+                        section: String(item?.section || sections.join(', ') || '').trim(),
+                        room: String(item?.room || '').trim(),
+                        capacity: String(item?.capacity || '').trim(),
+                        isCustom: item?.isCustom ?? !DEFAULT_CLASS_LIST.some((fallback) => normalizeClassText(fallback.name) === normalizeClassText(name))
+                    };
+                }).filter(Boolean)
+                : [];
+
+            if (!normalized.length) {
+                const seeded = DEFAULT_CLASS_LIST.map(cloneClassRecord);
+                saveData(STORAGE_KEY_CLASSES, seeded);
+                return seeded;
+            }
+
+            const existingKeys = new Set(normalized.map((item) => normalizeClassText(item.name)));
+            DEFAULT_CLASS_LIST.forEach((fallback) => {
+                if (existingKeys.has(normalizeClassText(fallback.name))) return;
+                normalized.push(cloneClassRecord(fallback));
+            });
+
+            saveData(STORAGE_KEY_CLASSES, normalized);
+            return normalized;
+        }
+
+        function saveClassList(nextList) {
+            classList = nextList.map(cloneClassRecord);
+            saveData(STORAGE_KEY_CLASSES, classList);
+        }
+
+        function matchesClassGrade(classGrade, classItem) {
+            const normalizedGrade = normalizeClassText(classGrade).replace(/[-_]+/g, ' ');
+            if (!normalizedGrade || !classItem) return false;
+
+            const names = [
+                classItem.name,
+                ...(Array.isArray(classItem.keywords) ? classItem.keywords : []),
+                ...(Array.isArray(classItem.sections) ? classItem.sections : [])
+            ]
+                .map((value) => normalizeClassText(value).replace(/[-_]+/g, ' '))
+                .filter(Boolean);
+
+            return names.some((name) => normalizedGrade === name || normalizedGrade === `class ${name}` || name === `class ${normalizedGrade}`);
+        }
+
+        function getClassSectionSummary(classItem) {
+            const sections = Array.isArray(classItem?.sections) ? classItem.sections.filter(Boolean) : [];
+            if (!sections.length) return '';
+            return `${sections.length} section${sections.length === 1 ? '' : 's'}: ${sections.join(', ')}`;
+        }
+
+        function populateSectionCountSelect(selectedCount = 1) {
+            const select = document.getElementById('classManagerSectionCount');
+            if (!select) return;
+
+            select.innerHTML = '';
+            for (let count = 1; count <= 10; count += 1) {
+                const option = document.createElement('option');
+                option.value = String(count);
+                option.textContent = `${count} section${count === 1 ? '' : 's'}`;
+                select.appendChild(option);
+            }
+            select.value = String(selectedCount || 1);
+        }
+
+        function renderSectionSlots(selectedSections = []) {
+            const wrap = document.getElementById('classSectionSlots');
+            const count = Number(document.getElementById('classManagerSectionCount')?.value || 1);
+            if (!wrap) return;
+
+            wrap.innerHTML = '';
+            for (let index = 0; index < count; index += 1) {
+                const slot = document.createElement('div');
+                slot.className = 'section-slot';
+
+                const select = document.createElement('select');
+                select.dataset.sectionIndex = String(index);
+                select.innerHTML = '<option value="">Select section name</option>' + CLASS_SECTION_OPTIONS.map((sectionName) => `<option value="${sectionName}">${sectionName}</option>`).join('');
+                select.value = selectedSections[index] || '';
+
+                slot.innerHTML = `<span>Section ${index + 1}</span>`;
+                slot.appendChild(select);
+                wrap.appendChild(slot);
+            }
+        }
+
+        function getSelectedSectionNames() {
+            return Array.from(document.querySelectorAll('#classSectionSlots select'))
+                .map((select) => String(select.value || '').trim())
+                .filter(Boolean);
+        }
+
+        function openClassToolbar() {
+            document.getElementById('classToolbar')?.classList.add('open');
+        }
+
+        function closeClassToolbar() {
+            document.getElementById('classToolbar')?.classList.remove('open');
+        }
+
+        function toggleClassToolbar(event) {
+            event?.stopPropagation?.();
+            const toolbar = document.getElementById('classToolbar');
+            if (!toolbar) return;
+            toolbar.classList.toggle('open');
+        }
+
+        function populateClassEditSelect(selectedId = '') {
+            const select = document.getElementById('classManagerSelect');
+            if (!select) return;
+
+            select.innerHTML = '<option value="">Select a class</option>';
+            classList.forEach((classItem) => {
+                const option = document.createElement('option');
+                option.value = classItem.id;
+                option.textContent = classItem.name;
+                select.appendChild(option);
+            });
+
+            if (selectedId) select.value = selectedId;
+            if (!select.value && classList.length) select.value = classList[0].id;
+        }
+
+        function setClassManagerFields(classItem) {
+            if (!classItem) return;
+            document.getElementById('classManagerId').value = classItem.id;
+            document.getElementById('classManagerName').value = classItem.name;
+            const sections = Array.isArray(classItem.sections) && classItem.sections.length ? classItem.sections : ['A'];
+            populateSectionCountSelect(sections.length);
+            renderSectionSlots(sections);
+        }
+
+        function switchClassManagerMode(mode = 'create') {
+            const normalizedMode = mode === 'edit' ? 'edit' : 'create';
+            document.getElementById('classManagerMode').value = normalizedMode;
+            document.getElementById('classModalTitle').textContent = normalizedMode === 'edit' ? 'Edit Class' : 'Create Class';
+            document.getElementById('classCreateTab')?.classList.toggle('active', normalizedMode === 'create');
+            document.getElementById('classEditTab')?.classList.toggle('active', normalizedMode === 'edit');
+
+            const selectWrap = document.getElementById('classSelectField');
+            if (selectWrap) selectWrap.style.display = normalizedMode === 'edit' ? 'grid' : 'none';
+
+            if (normalizedMode === 'create') {
+                document.getElementById('classManagerId').value = '';
+                document.getElementById('classManagerName').value = '';
+                populateSectionCountSelect(1);
+                renderSectionSlots(['A']);
+                populateClassEditSelect('');
+            } else {
+                populateClassEditSelect(document.getElementById('classManagerSelect')?.value || '');
+                const currentId = document.getElementById('classManagerSelect')?.value || classList[0]?.id || '';
+                const classItem = classList.find((item) => item.id === currentId);
+                if (classItem) setClassManagerFields(classItem);
+            }
+
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        function openClassManagerModal(mode = 'create') {
+            if (!classList.length) classList = loadClassList();
+
+            const overlay = document.getElementById('classManagerOverlay');
+            if (!overlay) return;
+
+            overlay.classList.add('active');
+            overlay.setAttribute('aria-hidden', 'false');
+            populateClassEditSelect();
+            switchClassManagerMode(mode);
+
+            if (mode === 'edit' && classList.length) {
+                populateClassEditSelect(classList[0].id);
+                setClassManagerFields(classList[0]);
+            }
+
+            closeClassToolbar();
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        function closeClassManagerModal() {
+            const overlay = document.getElementById('classManagerOverlay');
+            if (!overlay) return;
+            overlay.classList.remove('active');
+            overlay.setAttribute('aria-hidden', 'true');
+        }
+
+        function syncStudentsToRenamedClass(previousName, nextName) {
+            if (!previousName || !nextName || normalizeClassText(previousName) === normalizeClassText(nextName)) return;
+
+            const students = getData(STORAGE_KEY_STUDENTS);
+            let changed = false;
+            const updatedStudents = students.map((student) => {
+                if (!matchesClassGrade(student.classGrade, { name: previousName, keywords: buildClassKeywords(previousName) })) {
+                    return student;
+                }
+                changed = true;
+                return {
+                    ...student,
+                    classGrade: nextName
+                };
+            });
+
+            if (changed) saveData(STORAGE_KEY_STUDENTS, updatedStudents);
+        }
+
+        function handleClassManagerSelectChange() {
+            const selectedId = document.getElementById('classManagerSelect')?.value || '';
+            const classItem = classList.find((item) => item.id === selectedId);
+            if (!classItem) return;
+            setClassManagerFields(classItem);
+        }
+
+        function handleClassManagerSectionCountChange() {
+            const currentSections = getSelectedSectionNames();
+            renderSectionSlots(currentSections);
+        }
+
+        function populatePromotionClassSelects(selectedFromId = '') {
+            const fromSelect = document.getElementById('promotionFromClass');
+            const targetSelect = document.getElementById('promotionTargetClass');
+            if (!fromSelect || !targetSelect) return;
+
+            const currentFromId = selectedFromId || fromSelect.value || classList[0]?.id || '';
+            const currentTargetId = targetSelect.value || getNextClass(currentFromId)?.id || classList.find((item) => item.id !== currentFromId)?.id || '';
+
+            const buildOptions = (placeholder) => {
+                const options = [`<option value="">${placeholder}</option>`];
+                classList.forEach((classItem) => {
+                    options.push(`<option value="${classItem.id}">${classItem.name}</option>`);
+                });
+                return options.join('');
+            };
+
+            fromSelect.innerHTML = buildOptions('Select source class');
+            targetSelect.innerHTML = buildOptions('Select target class');
+            fromSelect.value = currentFromId;
+            targetSelect.value = currentTargetId;
+        }
+
+        function getStudentsForClass(classItem) {
+            if (!classItem) return [];
+            const selectedCampus = typeof getGlobalCampusFilterForCurrentUser === 'function'
+                ? getGlobalCampusFilterForCurrentUser()
+                : (localStorage.getItem('eduCore_dashboard_campus_filter') || 'all');
+            const campusMatches = (student) => !selectedCampus || selectedCampus === 'all' ||
+                String(student.campusName || student.branchName || student.campus || 'Main Campus').trim().toLowerCase() === String(selectedCampus).trim().toLowerCase();
+            return getData(STORAGE_KEY_STUDENTS)
+                .filter(campusMatches)
+                .filter((student) => matchesClassGrade(student.classGrade, classItem));
+        }
+
+        function updatePromotionSelectionState() {
+            const selectAll = document.getElementById('promotionSelectAllStudents');
+            const checkboxes = Array.from(document.querySelectorAll('.promotion-student-checkbox'));
+            if (!selectAll) return;
+
+            const checkedCount = checkboxes.filter((checkbox) => checkbox.checked).length;
+            selectAll.checked = checkboxes.length > 0 && checkedCount === checkboxes.length;
+            selectAll.indeterminate = checkedCount > 0 && checkedCount < checkboxes.length;
+        }
+
+        function renderPromotionStudentsTable() {
+            const fromId = document.getElementById('promotionFromClass')?.value || '';
+            const targetId = document.getElementById('promotionTargetClass')?.value || '';
+            const fromClass = classList.find((item) => item.id === fromId);
+            const targetClass = classList.find((item) => item.id === targetId);
+            const tbody = document.getElementById('promotionStudentsBody');
+            const noMessage = document.getElementById('promotionNoStudentsMessage');
+            const status = document.getElementById('promotionModalStatus');
+            const countPill = document.getElementById('promotionStudentCountPill');
+            const selectAll = document.getElementById('promotionSelectAllStudents');
+
+            if (!tbody || !noMessage || !status || !countPill || !selectAll) return;
+
+            tbody.innerHTML = '';
+            selectAll.checked = false;
+            selectAll.indeterminate = false;
+
+            if (!fromClass) {
+                status.textContent = 'Choose a source class to load its students.';
+                countPill.textContent = '0 students';
+                noMessage.style.display = 'none';
+                return;
+            }
+
+            const students = getStudentsForClass(fromClass);
+            const sameClass = targetClass && normalizeClassText(fromClass.name) === normalizeClassText(targetClass.name);
+            status.textContent = sameClass
+                ? 'Source and target class cannot be the same.'
+                : `Loaded ${students.length} student${students.length === 1 ? '' : 's'} from ${fromClass.name}.`;
+            countPill.textContent = `${students.length} student${students.length === 1 ? '' : 's'}`;
+
+            if (!students.length) {
+                noMessage.style.display = 'block';
+                return;
+            }
+
+            noMessage.style.display = 'none';
+            students.forEach((student) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><input type="checkbox" class="promotion-student-checkbox" value="${student.id}" onchange="updatePromotionSelectionState()"></td>
+                    <td><strong>${student.rollNo || '-'}</strong></td>
+                    <td>${student.fullName || '-'}</td>
+                    <td>${student.parentPhone || 'N/A'}</td>
+                    <td>${student.classGrade || '-'}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function openPromotionModal(preselectedFromId = '') {
+            if (!classList.length) classList = loadClassList();
+
+            const overlay = document.getElementById('promotionModalOverlay');
+            if (!overlay) return;
+
+            overlay.classList.add('active');
+            overlay.setAttribute('aria-hidden', 'false');
+            populatePromotionClassSelects(preselectedFromId);
+            updatePromotionModalTargetChoices();
+            renderPromotionStudentsTable();
+            closeClassToolbar();
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        function closePromotionModal() {
+            const overlay = document.getElementById('promotionModalOverlay');
+            if (!overlay) return;
+            overlay.classList.remove('active');
+            overlay.setAttribute('aria-hidden', 'true');
+        }
+
+        function updatePromotionModalTargetChoices() {
+            const fromId = document.getElementById('promotionFromClass')?.value || '';
+            const targetSelect = document.getElementById('promotionTargetClass');
+            if (!targetSelect) return;
+
+            const currentTarget = targetSelect.value;
+            targetSelect.innerHTML = '<option value="">Select target class</option>';
+            classList.forEach((classItem) => {
+                const option = document.createElement('option');
+                option.value = classItem.id;
+                option.textContent = classItem.name;
+                if (classItem.id === fromId) option.disabled = true;
+                targetSelect.appendChild(option);
+            });
+
+            if (currentTarget && currentTarget !== fromId) targetSelect.value = currentTarget;
+            if (!targetSelect.value) {
+                const fallback = getNextClass(fromId) || classList.find((classItem) => classItem.id !== fromId);
+                if (fallback) targetSelect.value = fallback.id;
+            }
+        }
+
+        function getSelectedPromotionStudentIds() {
+            return Array.from(document.querySelectorAll('.promotion-student-checkbox:checked')).map((checkbox) => checkbox.value);
+        }
+
+        async function promoteStudentsFromModal() {
+            const fromId = document.getElementById('promotionFromClass')?.value || '';
+            const targetId = document.getElementById('promotionTargetClass')?.value || '';
+            const fromClass = classList.find((item) => item.id === fromId);
+            const targetClass = classList.find((item) => item.id === targetId);
+            const selectedIds = getSelectedPromotionStudentIds();
+
+            if (!fromClass) {
+                alert('Please select a source class.');
+                return;
+            }
+
+            if (!targetClass) {
+                alert('Please select a target class.');
+                return;
+            }
+
+            if (normalizeClassText(fromClass.name) === normalizeClassText(targetClass.name)) {
+                alert('Source and target class cannot be the same.');
+                return;
+            }
+
+            if (!selectedIds.length) {
+                alert('Please select at least one student to promote.');
+                return;
+            }
+
+            const students = getData(STORAGE_KEY_STUDENTS);
+            const selectedStudents = students.filter((student) => selectedIds.includes(student.id) && matchesClassGrade(student.classGrade, fromClass));
+
+            if (!selectedStudents.length) {
+                alert('No selected students were found in the source class.');
+                return;
+            }
+
+            const shouldPromote = typeof showAppConfirm === 'function'
+                ? await showAppConfirm(`Promote ${selectedStudents.length} student(s) from ${fromClass.name} to ${targetClass.name}?`)
+                : confirm(`Promote ${selectedStudents.length} student(s) from ${fromClass.name} to ${targetClass.name}?`);
+            if (!shouldPromote) return;
+
+            const updatedStudents = students.map((student) => {
+                if (!selectedIds.includes(student.id)) return student;
+                if (!matchesClassGrade(student.classGrade, fromClass)) return student;
+                return {
+                    ...student,
+                    classGrade: targetClass.name
+                };
+            });
+
+            saveData(STORAGE_KEY_STUDENTS, updatedStudents);
+
+            const history = getPromotionHistory();
+            const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser') || 'null');
+            history.unshift({
+                id: Date.now().toString(),
+                date: new Date().toLocaleString(),
+                fromClass: fromClass.name,
+                toClass: targetClass.name,
+                studentCount: selectedStudents.length,
+                processedBy: loggedInUser?.fullName || 'Admin User',
+                studentNames: selectedStudents.map((student) => student.fullName),
+                mode: 'manual'
+            });
+            savePromotionHistory(history.slice(0, 100));
+
+            if (typeof pushNotification === 'function') {
+                pushNotification('Students Promoted', `${selectedStudents.length} student(s) moved from ${fromClass.name} to ${targetClass.name}.`, 'user');
+            }
+
+            const activeClassId = document.getElementById('studentsListView')?.dataset.currentClass || '';
+            if (activeClassId) {
+                showClassStudents(activeClassId);
+            } else {
+                renderClassesGrid();
+            }
+            renderPromotionStudentsTable();
+            closePromotionModal();
+        }
+
+        function validateClassManagerValues({ name, sections, currentId }) {
+            if (!name) return 'Please enter a class name.';
+            if (!sections.length) return 'Please select at least one section.';
+
+            const hasDuplicateSections = new Set(sections.map((section) => normalizeClassText(section))).size !== sections.length;
+            if (hasDuplicateSections) return 'Please select unique section names.';
+
+            const duplicateName = classList.find((item) => item.id !== currentId && normalizeClassText(item.name) === normalizeClassText(name));
+            if (duplicateName) return 'A class with this name already exists.';
+
+            return '';
+        }
+
+        function refreshClassManagerAfterSave(selectedClassId = '') {
+            populateClassEditSelect(selectedClassId);
+            if (selectedClassId) {
+                const selected = classList.find((item) => item.id === selectedClassId);
+                if (selected) setClassManagerFields(selected);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            classList = loadClassList();
             renderClassesGrid();
 
-            // Search functionality
             const searchInput = document.getElementById('classSearchInput');
             if (searchInput) {
                 searchInput.addEventListener('input', (e) => {
@@ -339,24 +1297,86 @@
                     }
                 });
             }
-        });
 
-        const classList = [
-            { id: 'play', name: 'Play Group', keywords: ['play', 'pg', 'playgroup', 'play group', 'play-group'] },
-            { id: 'kg1', name: 'KG1', keywords: ['kg1', 'nursery', 'nursary', 'nur'] },
-            { id: 'kg2', name: 'KG2', keywords: ['kg2', 'prep', 'preschool', 'pre'] },
-            { id: '1', name: 'Class One', keywords: ['1', 'one', '1st', 'class 1', 'class one'] },
-            { id: '2', name: 'Class Two', keywords: ['2', 'two', '2nd', 'class 2', 'class two'] },
-            { id: '3', name: 'Class Three', keywords: ['3', 'three', '3rd', 'class 3', 'class three'] },
-            { id: '4', name: 'Class Four', keywords: ['4', 'four', '4th', 'class 4', 'class four'] },
-            { id: '5', name: 'Class Five', keywords: ['5', 'five', '5th', 'class 5', 'class five'] },
-            { id: '6', name: 'Class Six', keywords: ['6', 'six', '6th', 'class 6', 'class six'] },
-            { id: '7', name: 'Class Seven', keywords: ['7', 'seven', '7th', 'class 7', 'class seven'] },
-            { id: '8', name: 'Class Eight', keywords: ['8', 'eight', '8th', 'class 8', 'class eight'] },
-            { id: '9', name: 'Class Nine', keywords: ['9', 'nine', '9th', 'class 9', 'class nine'] },
-            { id: '10', name: 'Class Ten', keywords: ['10', 'ten', '10th', 'class 10', 'class ten'] },
-            { id: 'graduate', name: 'Graduate', keywords: ['graduate', 'graduated', 'alumni', 'passed out'] },
-        ];
+            document.getElementById('classManagerSelect')?.addEventListener('change', handleClassManagerSelectChange);
+            document.getElementById('classManagerSectionCount')?.addEventListener('change', handleClassManagerSectionCountChange);
+            document.getElementById('promotionFromClass')?.addEventListener('change', () => {
+                updatePromotionModalTargetChoices();
+                renderPromotionStudentsTable();
+            });
+            document.getElementById('promotionTargetClass')?.addEventListener('change', renderPromotionStudentsTable);
+            document.getElementById('promotionSelectAllStudents')?.addEventListener('change', (event) => {
+                document.querySelectorAll('.promotion-student-checkbox').forEach((checkbox) => {
+                    checkbox.checked = event.target.checked;
+                });
+                updatePromotionSelectionState();
+            });
+            document.getElementById('classManagerForm')?.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const mode = document.getElementById('classManagerMode').value;
+                const currentId = document.getElementById('classManagerId').value;
+                const name = String(document.getElementById('classManagerName').value || '').trim();
+                const sections = Array.from(new Set(getSelectedSectionNames()));
+                const validationMessage = validateClassManagerValues({ name, sections, currentId });
+
+                if (validationMessage) {
+                    alert(validationMessage);
+                    return;
+                }
+
+                if (mode === 'edit') {
+                    const selectedClass = classList.find((item) => item.id === currentId) || classList[0];
+                    if (!selectedClass) return;
+
+                    const previousName = selectedClass.name;
+                    selectedClass.name = name;
+                    selectedClass.sections = sections;
+                    selectedClass.section = sections.join(', ');
+                    selectedClass.keywords = buildClassKeywords(name);
+                    selectedClass.isCustom = true;
+
+                    saveClassList(classList);
+                    syncStudentsToRenamedClass(previousName, name);
+                } else {
+                    classList.push({
+                        id: generateUniqueRecordId('CLS'),
+                        name,
+                        keywords: buildClassKeywords(name),
+                        sections,
+                        section: sections.join(', '),
+                        room: '',
+                        capacity: '',
+                        isCustom: true
+                    });
+                    saveClassList(classList);
+                }
+
+                const activeClassId = document.getElementById('studentsListView').dataset.currentClass || '';
+                const isViewingClass = Boolean(activeClassId);
+                renderClassesGrid();
+                refreshClassManagerAfterSave(mode === 'edit' ? currentId : '');
+                closeClassManagerModal();
+                if (isViewingClass) {
+                    showClassStudents(activeClassId);
+                }
+            });
+
+            document.addEventListener('click', (event) => {
+                const toolbar = document.getElementById('classToolbar');
+                if (toolbar && !toolbar.contains(event.target)) {
+                    toolbar.classList.remove('open');
+                }
+            });
+
+            document.getElementById('classManagerOverlay')?.addEventListener('click', (event) => {
+                if (event.target.id === 'classManagerOverlay') closeClassManagerModal();
+            });
+
+            document.getElementById('promotionModalOverlay')?.addEventListener('click', (event) => {
+                if (event.target.id === 'promotionModalOverlay') closePromotionModal();
+            });
+        });
 
         function renderClassesGrid() {
             const grid = document.getElementById('classesGrid');
@@ -371,8 +1391,7 @@
 
             classList.forEach(cls => {
                 const classStudents = students.filter(s => {
-                    const sClass = s.classGrade.toLowerCase().trim();
-                    return cls.keywords.some(k => sClass === k || sClass === `class ${k}`);
+                    return matchesClassGrade(s.classGrade, cls);
                 });
 
                 const card = document.createElement('div');
@@ -382,6 +1401,7 @@
                 card.innerHTML = `
                     ${classStudents.length > 0 ? `<div class="class-count">${classStudents.length}</div>` : ''}
                     <div class="class-label">${cls.name}</div>
+                    ${getClassSectionSummary(cls) ? `<div class="class-meta">${getClassSectionSummary(cls)}</div>` : ''}
                 `;
 
                 grid.appendChild(card);
@@ -421,8 +1441,7 @@
             if (!cls) return;
 
             let classStudents = students.filter(s => {
-                const sClass = s.classGrade.toLowerCase().trim();
-                return cls.keywords.some(k => sClass === k || sClass === `class ${k}`);
+                return matchesClassGrade(s.classGrade, cls);
             });
 
             if (searchTerm) {
@@ -517,8 +1536,7 @@
 
             let students = getData(STORAGE_KEY_STUDENTS);
             const matchingStudents = students.filter(student => {
-                const normalizedClass = String(student.classGrade || '').toLowerCase().trim();
-                return currentClass.keywords.some(keyword => normalizedClass === keyword || normalizedClass === `class ${keyword}`);
+                return matchesClassGrade(student.classGrade, currentClass);
             });
 
             if (matchingStudents.length === 0) {

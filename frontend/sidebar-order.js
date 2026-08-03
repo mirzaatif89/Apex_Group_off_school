@@ -40,12 +40,20 @@
 
     const navItems = [
         { type: 'link', page: 'dashboard', label: 'Dashboard', icon: 'layout-dashboard' },
-        { type: 'link', page: 'banners', label: 'Banners', icon: 'image' },
-        { type: 'link', page: 'ads', label: 'Ads', icon: 'megaphone' },
         { type: 'link', page: 'online_admissions', label: 'Online Admissions', icon: 'clipboard-list' },
         { type: 'link', page: 'classes', label: 'Classes', icon: 'school' },
         { type: 'link', page: 'students', label: 'Students', icon: 'users' },
         { type: 'link', page: 'student_scheduling', label: 'Students Scheduling', icon: 'calendar-clock' },
+        {
+            type: 'dropdown',
+            label: 'Training Videos',
+            icon: 'video',
+            children: [
+                { type: 'link', page: 'training_videos', hash: '#admin-portal', label: 'Admin Portal', icon: 'layout-dashboard' },
+                { type: 'link', page: 'training_videos', hash: '#sms-alert-system', label: 'SMS Alert System', icon: 'message-circle' },
+                { type: 'link', page: 'training_videos', hash: '#parent-portal', label: 'Parent Portal', icon: 'users-round' }
+            ]
+        },
         { type: 'link', page: 'families', label: 'Families', icon: 'home' },
         { type: 'link', page: 'teachers', label: 'Teachers', icon: 'book-open' },
         { type: 'link', page: 'teacher_scheduling', label: 'Teachers Scheduling', icon: 'calendar-days' },
@@ -105,6 +113,16 @@
         },
         { type: 'link', page: 'library', label: 'Library', icon: 'library' },
         { type: 'link', page: 'complain_box', label: 'Complain Box', icon: 'message-square' },
+        {
+            type: 'dropdown',
+            label: 'Download Apps',
+            icon: 'download',
+            children: [
+                { type: 'link', page: 'download_apps', hash: '#download-center', label: 'Download Center', icon: 'folder-down' },
+                { type: 'link', page: 'download_apps', hash: '#admin-app', label: 'Admin App', icon: 'shield-check' },
+                { type: 'link', page: 'download_apps', hash: '#parent-app', label: 'Parent App', icon: 'users-round' }
+            ]
+        },
         { type: 'link', page: 'branch_registration', label: 'Branch Registration', icon: 'building-2' },
         { type: 'link', page: 'visitor_books', label: 'Visitor Records', icon: 'clipboard-list' },
         { type: 'link', page: 'certificate', label: 'Certificates', icon: 'award' },

@@ -134,8 +134,6 @@ if (window.Capacitor?.isNativePlatform?.()) {
         'student_courses.html': { moduleKey: 'student_scheduling', defaultHome: 'dashboard.html', label: 'Class Course', icon: 'library' },
         'quiz_uploading.html': { moduleKey: 'student_scheduling', defaultHome: 'dashboard.html', label: 'Quiz Uploading', icon: 'circle-help' },
         'lecture_uploading.html': { moduleKey: 'student_scheduling', defaultHome: 'dashboard.html', label: 'Lecture Uploading', icon: 'presentation' },
-        'banners.html': { moduleKey: 'banners', defaultHome: 'dashboard.html', label: 'Banners', icon: 'image' },
-        'ads.html': { moduleKey: 'ads', defaultHome: 'dashboard.html', label: 'Ads', icon: 'megaphone' },
         'online_admissions.html': { moduleKey: 'online_admissions', defaultHome: 'dashboard.html', label: 'Online Admissions', icon: 'clipboard-list' },
         'teachers.html': { moduleKey: 'teachers', defaultHome: 'dashboard.html', label: 'Teachers', icon: 'book-open' },
         'stuck_off.html': { moduleKey: 'students', defaultHome: 'dashboard.html', label: 'Stuck Off', icon: 'user-x' },
@@ -145,6 +143,9 @@ if (window.Capacitor?.isNativePlatform?.()) {
         'teacher_leave_requests.html': { moduleKey: 'teacher_scheduling', defaultHome: 'dashboard.html', label: 'Teacher Leave Requests', icon: 'calendar-check' },
         'staff.html': { moduleKey: 'staff', defaultHome: 'dashboard.html', label: 'Staff', icon: 'briefcase' },
         'classes.html': { moduleKey: 'classes', defaultHome: 'dashboard.html', label: 'Classes', icon: 'school' },
+        'assign_sections.html': { moduleKey: 'classes', defaultHome: 'classes.html', label: 'Assign Sections', icon: 'move-horizontal' },
+        'sections_wise_subjects.html': { moduleKey: 'classes', defaultHome: 'classes.html', label: 'Sections wise Subjects', icon: 'book-open-check' },
+        'sections_report.html': { moduleKey: 'classes', defaultHome: 'classes.html', label: 'Sections Report', icon: 'folder-open' },
         'set_fee.html': { moduleKey: 'fees', defaultHome: 'dashboard.html', label: 'Set Fees', icon: 'badge-dollar-sign' },
         'fees.html': { moduleKey: 'fees', defaultHome: 'dashboard.html', label: 'Fees', icon: 'credit-card' },
         'fee_challan.html': { moduleKey: 'fee_challan', defaultHome: 'dashboard.html', label: 'Fee Challan', icon: 'file-text' },
@@ -732,10 +733,18 @@ if (window.Capacitor?.isNativePlatform?.()) {
 
             const navItems = [
                 { type: 'link', page: 'dashboard.html', label: 'Dashboard', icon: 'layout-dashboard' },
-                { type: 'link', page: 'banners.html', label: 'Banners', icon: 'image' },
-                { type: 'link', page: 'ads.html', label: 'Ads', icon: 'megaphone' },
                 { type: 'link', page: 'online_admissions.html', label: 'Online Admissions', icon: 'clipboard-list' },
                 { type: 'link', page: 'classes.html', label: 'Classes', icon: 'school' },
+                {
+                    type: 'dropdown',
+                    label: 'Manage Classes & Sections',
+                    icon: 'layers-3',
+                    children: [
+                        { page: 'assign_sections.html', label: 'Assign Sections', icon: 'move-horizontal' },
+                        { page: 'sections_wise_subjects.html', label: 'Sections wise Subjects', icon: 'book-open-check' },
+                        { page: 'sections_report.html', label: 'Sections Report', icon: 'folder-open' }
+                    ]
+                },
                 { type: 'link', page: 'students.html', label: 'Students', icon: 'users' },
                 { type: 'link', page: 'student_scheduling.html', label: 'Students Scheduling', icon: 'calendar-clock' },
                 { type: 'link', page: 'families.html', label: 'Families', icon: 'home' },
