@@ -88,6 +88,80 @@
             line-height: 1.55;
         }
 
+        .section-list-card {
+            margin-top: 1rem;
+            display: grid;
+            gap: 0.85rem;
+            padding: 1rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            background: rgba(255, 255, 255, 0.78);
+        }
+
+        .section-list-preview {
+            display: grid;
+            gap: 0.55rem;
+        }
+
+        .section-list-preview-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+        }
+
+        .section-filter-box {
+            display: grid;
+            gap: 0.65rem;
+            padding: 0.85rem;
+            border-radius: 1rem;
+            background: rgba(14, 116, 144, 0.05);
+            border: 1px solid rgba(14, 116, 144, 0.10);
+        }
+
+        .section-filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 0.45rem 0.7rem;
+        }
+
+        .section-filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 0.7rem;
+            border-radius: 0.85rem;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            color: var(--text-primary);
+        }
+
+        .section-filter-option input {
+            accent-color: var(--primary-color);
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .section-filter-option.disabled {
+            opacity: 0.7;
+        }
+
+        .section-preview-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.4rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(14, 116, 144, 0.08);
+            color: var(--text-primary);
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .section-list-card .assign-action-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
         .assign-table-wrap {
             overflow: auto;
             border-radius: 1rem;
@@ -103,7 +177,145 @@
 
         .assign-table-wrap table {
             margin: 0;
-            min-width: 760px;
+            min-width: 860px;
+            table-layout: auto;
+        }
+
+        .assign-table-wrap th,
+        .assign-table-wrap td {
+            padding: 0.9rem 0.85rem;
+            vertical-align: middle;
+        }
+
+        .assign-table-wrap th {
+            white-space: nowrap;
+        }
+
+        .assign-table-wrap th.select-col,
+        .assign-table-wrap td.select-col {
+            width: 72px;
+            min-width: 72px;
+            max-width: 72px;
+            text-align: center;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+
+        .assign-table-wrap tbody tr:hover {
+            background: rgba(32, 176, 164, 0.04);
+            cursor: pointer;
+        }
+
+        .assign-table-wrap tbody tr.is-selected {
+            background: rgba(32, 176, 164, 0.08);
+        }
+
+        .assign-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.85rem;
+        }
+
+        .assign-toolbar-left,
+        .assign-toolbar-right {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+            align-items: center;
+        }
+
+        .assign-batch-controls {
+            display: grid;
+            grid-template-columns: minmax(180px, 260px) auto;
+            gap: 0.75rem;
+            align-items: end;
+            margin-bottom: 0.85rem;
+        }
+
+        .assign-batch-controls .assign-field {
+            margin: 0;
+        }
+
+        .assign-batch-controls .assign-field select {
+            min-height: 46px;
+        }
+
+        .assign-action-btn {
+            border: 0;
+            border-radius: 999px;
+            padding: 0.78rem 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+
+        .assign-action-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .assign-action-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .assign-action-btn.primary {
+            background: linear-gradient(135deg, var(--primary-color), #0b6b63);
+            color: white;
+            box-shadow: 0 12px 22px rgba(32, 176, 164, 0.18);
+        }
+
+        .assign-action-btn.secondary {
+            background: rgba(148, 163, 184, 0.14);
+            color: var(--text-primary);
+        }
+
+        .assign-note {
+            padding: 0.7rem 0.85rem;
+            border-radius: 0.8rem;
+            background: rgba(32, 176, 164, 0.08);
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        .assign-student-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .assign-row-toggle {
+            width: 1.15rem;
+            height: 1.15rem;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+            flex: 0 0 auto;
+            display: inline-block;
+            margin: 0;
+        }
+
+        .assign-name-wrap {
+            display: grid;
+            gap: 0.12rem;
+        }
+
+        .assign-name-wrap strong {
+            color: var(--text-primary);
+        }
+
+        .assign-section-picker {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .assign-section-disabled {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
 
         @media (max-width: 960px) {
@@ -160,9 +372,63 @@
                                 Choose a class to see section details and students.
                             </div>
                         </div>
+
+                        <div class="assign-card section-list-card">
+                            <div>
+                                <h3 style="margin:0 0 0.25rem;">Get Section List</h3>
+                                <p style="margin:0;color:var(--text-secondary);">
+                                    Select a class and download its students grouped by section in an Excel-friendly file.
+                                </p>
+                            </div>
+                            <div class="assign-field">
+                                <label for="sectionListClassSelect">Class for report</label>
+                                <select id="sectionListClassSelect">
+                                    <option value="">Select class</option>
+                                </select>
+                            </div>
+                            <div class="section-filter-box">
+                                <div>
+                                    <h4 style="margin:0 0 0.2rem;">Quick Filter</h4>
+                                    <p style="margin:0;color:var(--text-secondary);">Select one or more sections to include in the export.</p>
+                                </div>
+                                <div class="section-filter-grid" id="sectionQuickFilterGrid">
+                                    <div class="assign-section-disabled">Select a class to load sections.</div>
+                                </div>
+                            </div>
+                            <div class="section-list-preview" id="sectionListPreview">
+                                <div class="assign-section-disabled">No class selected.</div>
+                            </div>
+                            <button type="button" class="assign-action-btn primary" id="downloadSectionListBtn" disabled>Download Section List</button>
+                        </div>
                     </div>
 
                     <div class="assign-card">
+                        <div class="assign-toolbar">
+                            <div class="assign-toolbar-left">
+                                <button type="button" class="assign-action-btn primary" id="assignSaveBtn" disabled>Save</button>
+                                <button type="button" class="assign-action-btn secondary" id="assignClearBtn" disabled>Clear</button>
+                            </div>
+                            <div class="assign-toolbar-right">
+                                <span class="assign-pill" id="assignSelectedCount">0 selected</span>
+                            </div>
+                        </div>
+
+                        <div class="assign-note" id="assignSectionNote">
+                            Select students, choose one section, then save to assign them all together.
+                        </div>
+
+                        <div class="assign-batch-controls">
+                            <div class="assign-field">
+                                <label for="assignSectionSelect">Available section</label>
+                                <select id="assignSectionSelect" disabled>
+                                    <option value="">Select section</option>
+                                </select>
+                            </div>
+                            <div style="padding-bottom: 0.2rem;">
+                                <span class="assign-pill" id="assignSectionCount">0 sections</span>
+                            </div>
+                        </div>
+
                         <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:0.8rem;">
                             <div>
                                 <h3 style="margin:0 0 0.25rem;">Students Table</h3>
@@ -174,12 +440,14 @@
                             <table id="assignStudentsTable">
                                 <thead>
                                     <tr>
+                                        <th class="select-col">Select</th>
                                         <th>Roll No</th>
                                         <th>Name</th>
                                         <th>Father</th>
                                         <th>Phone</th>
                                         <th>Campus</th>
                                         <th>Class</th>
+                                        <th>Current Section</th>
                                     </tr>
                                 </thead>
                                 <tbody id="assignStudentsBody"></tbody>
@@ -197,6 +465,8 @@
     <script src="auth.js?v=20260520-sidebar-requested-order"></script>
     <script src="script.js?v=20260705-search-fix"></script>
     <script>
+        let lastSectionReportClassId = '';
+
         function normalizeAssignText(value) {
             return String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
         }
@@ -205,6 +475,75 @@
             const sections = Array.isArray(classItem?.sections) ? classItem.sections.filter(Boolean) : [];
             const sectionText = sections.length ? `${sections.length} section${sections.length === 1 ? '' : 's'}: ${sections.join(', ')}` : 'No sections assigned yet';
             return sectionText;
+        }
+
+        function getAssignSectionList(classItem) {
+            const sections = Array.isArray(classItem?.sections) ? classItem.sections : [];
+            return Array.from(new Set(sections.map((section) => String(section || '').trim()).filter(Boolean)));
+        }
+
+        function getSelectedAssignClassItem() {
+            const select = document.getElementById('assignClassSelect');
+            if (!select) return null;
+            return getAssignClassPool().find((item) => item.id === select.value) || null;
+        }
+
+        function getSectionReportClassItem() {
+            const select = document.getElementById('sectionListClassSelect');
+            if (!select) return null;
+            return getAssignClassPool().find((item) => item.id === select.value) || null;
+        }
+
+        function getSelectedQuickFilterSections() {
+            return Array.from(document.querySelectorAll('.section-quick-filter:checked'))
+                .map((input) => String(input.value || '').trim())
+                .filter(Boolean);
+        }
+
+        function syncSectionFilterDefaults(classItem) {
+            const quickGrid = document.getElementById('sectionQuickFilterGrid');
+            if (!quickGrid || !classItem) return;
+            if (getSelectedQuickFilterSections().length) return;
+
+            quickGrid.querySelectorAll('.section-quick-filter').forEach((checkbox) => {
+                checkbox.checked = checkbox.value !== 'No section assigned';
+            });
+        }
+
+        function getSelectedAssignRowIds() {
+            return Array.from(document.querySelectorAll('.assign-row-toggle:checked')).map((input) => input.dataset.studentId).filter(Boolean);
+        }
+
+        function getSelectedAssignStudentRows() {
+            return Array.from(document.querySelectorAll('.assign-row-toggle:checked'))
+                .map((input) => input.closest('tr'))
+                .filter(Boolean);
+        }
+
+        function updateAssignActionState() {
+            const selectedCount = getSelectedAssignRowIds().length;
+            const selectedCountPill = document.getElementById('assignSelectedCount');
+            const saveBtn = document.getElementById('assignSaveBtn');
+            const clearBtn = document.getElementById('assignClearBtn');
+            const sectionSelect = document.getElementById('assignSectionSelect');
+            if (selectedCountPill) {
+                selectedCountPill.textContent = `${selectedCount} selected`;
+            }
+            if (saveBtn) saveBtn.disabled = selectedCount === 0 || !sectionSelect?.value;
+            if (clearBtn) clearBtn.disabled = selectedCount === 0;
+        }
+
+        function toggleAssignRowSection(studentId, checked) {
+            const safeStudentId = String(studentId || '').trim();
+            if (!safeStudentId) return;
+            const escapedStudentId = window.CSS && typeof window.CSS.escape === 'function'
+                ? window.CSS.escape(safeStudentId)
+                : safeStudentId.replace(/["\\]/g, '\\$&');
+            const row = document.querySelector(`tr[data-student-id="${escapedStudentId}"]`);
+            if (!row) return;
+            row.classList.toggle('is-selected', checked);
+            const picker = row.querySelector('[data-section-picker]');
+            if (picker) picker.hidden = !checked;
         }
 
         function getAssignClassPool() {
@@ -242,6 +581,10 @@
             return names.some((name) => studentClass === name || studentClass === `class ${name}` || name === `class ${studentClass}`);
         }
 
+        function getStudentSectionValue(student) {
+            return String(student?.section || student?.assignedSection || '').trim();
+        }
+
         function getAssignStudentsForClass(classItem) {
             const selectedCampus = typeof getGlobalCampusFilterForCurrentUser === 'function'
                 ? getGlobalCampusFilterForCurrentUser()
@@ -256,16 +599,214 @@
 
         function renderAssignClassSelect() {
             const select = document.getElementById('assignClassSelect');
+            const reportSelect = document.getElementById('sectionListClassSelect');
             if (!select) return;
 
             const classes = getAssignClassPool();
             select.innerHTML = '<option value="">Select class</option>';
+            if (reportSelect) reportSelect.innerHTML = '<option value="">Select class</option>';
             classes.forEach((classItem) => {
                 const option = document.createElement('option');
                 option.value = classItem.id;
                 option.textContent = classItem.name;
                 select.appendChild(option);
+
+                if (reportSelect) {
+                    const reportOption = document.createElement('option');
+                    reportOption.value = classItem.id;
+                    reportOption.textContent = classItem.name;
+                    reportSelect.appendChild(reportOption);
+                }
             });
+        }
+
+        function getSectionReportRows(classItem) {
+            const students = getAssignStudentsForClass(classItem);
+            const classSections = getAssignSectionList(classItem);
+            const sectionMap = new Map(classSections.map((sectionName) => [sectionName, []]));
+            const unassignedStudents = [];
+
+            students.forEach((student) => {
+                const sectionName = getStudentSectionValue(student);
+                if (sectionName && sectionMap.has(sectionName)) {
+                    sectionMap.get(sectionName).push(student);
+                    return;
+                }
+                unassignedStudents.push(student);
+            });
+
+            const orderedSections = classSections.map((sectionName) => ({
+                sectionName,
+                students: sectionMap.get(sectionName) || []
+            }));
+
+            if (unassignedStudents.length) {
+                orderedSections.push({
+                    sectionName: 'No section assigned',
+                    students: unassignedStudents
+                });
+            }
+
+            return orderedSections;
+        }
+
+        function getFilteredSectionReportRows(classItem, selectedFilters = getSelectedQuickFilterSections()) {
+            const rows = getSectionReportRows(classItem);
+            if (!selectedFilters.length) return rows;
+
+            const selectedSet = new Set(selectedFilters.map((section) => normalizeAssignText(section)));
+            return rows.filter((group) => selectedSet.has(normalizeAssignText(group.sectionName)));
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[char]));
+        }
+
+        function updateSectionListPreview() {
+            const reportSelect = document.getElementById('sectionListClassSelect');
+            const preview = document.getElementById('sectionListPreview');
+            const downloadBtn = document.getElementById('downloadSectionListBtn');
+            if (!reportSelect || !preview || !downloadBtn) return;
+
+            const classItem = getSectionReportClassItem();
+            const quickGrid = document.getElementById('sectionQuickFilterGrid');
+            if (!classItem) {
+                preview.innerHTML = '<div class="assign-section-disabled">No class selected.</div>';
+                if (quickGrid) quickGrid.innerHTML = '<div class="assign-section-disabled">Select a class to load sections.</div>';
+                downloadBtn.disabled = true;
+                lastSectionReportClassId = '';
+                return;
+            }
+
+            const allSections = getSectionReportRows(classItem);
+            const selectedFilters = getSelectedQuickFilterSections();
+            const isFreshClassSelection = lastSectionReportClassId !== classItem.id;
+            const activeFilters = isFreshClassSelection ? [] : selectedFilters;
+            const sections = getFilteredSectionReportRows(classItem, activeFilters);
+            const totalStudents = sections.reduce((sum, item) => sum + item.students.length, 0);
+
+            if (quickGrid) {
+                if (!allSections.length) {
+                    quickGrid.innerHTML = '<div class="assign-section-disabled">No sections available for this class.</div>';
+                } else {
+                    quickGrid.innerHTML = allSections.map((section) => {
+                        const isChecked = activeFilters.length
+                            ? activeFilters.some((value) => normalizeAssignText(value) === normalizeAssignText(section.sectionName))
+                            : section.sectionName !== 'No section assigned';
+                        return `
+                            <label class="section-filter-option${section.sectionName === 'No section assigned' ? ' disabled' : ''}">
+                                <input type="checkbox" class="section-quick-filter" value="${escapeHtml(section.sectionName)}" ${isChecked ? 'checked' : ''}>
+                                <span>${escapeHtml(section.sectionName)} (${section.students.length})</span>
+                            </label>
+                        `;
+                    }).join('');
+
+                    quickGrid.querySelectorAll('.section-quick-filter').forEach((checkbox) => {
+                        checkbox.addEventListener('change', updateSectionListPreview);
+                    });
+                }
+            }
+            lastSectionReportClassId = classItem.id;
+
+            preview.innerHTML = `
+                <div class="assign-summary">
+                    <strong style="color:var(--text-primary);">${escapeHtml(classItem.name)}</strong>
+                    <span>${totalStudents} student${totalStudents === 1 ? '' : 's'} in ${sections.length} selected section${sections.length === 1 ? '' : 's'}</span>
+                </div>
+                <div class="section-list-preview-grid">
+                    ${sections.length
+                        ? sections.map((section) => `<span class="section-preview-pill">${escapeHtml(section.sectionName)}: ${section.students.length}</span>`).join('')
+                        : '<span class="assign-section-disabled">No students found for the selected filter.</span>'}
+                </div>
+            `;
+            downloadBtn.disabled = !sections.length || !totalStudents;
+        }
+
+        function buildSectionListWorkbookHtml(classItem, sectionGroups) {
+            const generatedAt = new Date().toLocaleString();
+            const rowsHtml = sectionGroups.map((group) => `
+                <h2 style="margin:18px 0 8px;color:#0f172a;">Section: ${escapeHtml(group.sectionName)} (${group.students.length})</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Roll No</th>
+                            <th>Name</th>
+                            <th>Father</th>
+                            <th>Phone</th>
+                            <th>Campus</th>
+                            <th>Class</th>
+                            <th>Section</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${group.students.map((student) => `
+                            <tr>
+                                <td>${escapeHtml(student.rollNo || '-')}</td>
+                                <td>${escapeHtml(student.fullName || '-')}</td>
+                                <td>${escapeHtml(student.fatherName || '-')}</td>
+                                <td>${escapeHtml(student.parentPhone || 'N/A')}</td>
+                                <td>${escapeHtml(student.campusName || student.branchName || student.campus || 'Main Campus')}</td>
+                                <td>${escapeHtml(student.classGrade || '-')}</td>
+                                <td>${escapeHtml(getStudentSectionValue(student) || 'No section assigned')}</td>
+                            </tr>
+                        `).join('') || '<tr><td colspan="7" style="text-align:center;color:#64748b;">No student records in this section.</td></tr>'}
+                    </tbody>
+                </table>
+            `).join('');
+
+            return `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; color: #0f172a; }
+        h1 { margin: 0 0 8px; }
+        .meta { margin: 0 0 18px; color: #475569; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 22px; }
+        th, td { border: 1px solid #cbd5e1; padding: 8px 10px; text-align: left; }
+        th { background: #e0f2fe; }
+    </style>
+</head>
+<body>
+    <h1>${escapeHtml(classItem.name)} - Section Wise Student List</h1>
+    <p class="meta">Generated at ${escapeHtml(generatedAt)}</p>
+    ${rowsHtml || '<p>No student records found.</p>'}
+</body>
+</html>`;
+        }
+
+        function downloadSectionListReport() {
+            const classItem = getSectionReportClassItem();
+            if (!classItem) {
+                alert('Please select a class for the report.');
+                return;
+            }
+
+            const selectedFilters = getSelectedQuickFilterSections();
+            const sectionGroups = getFilteredSectionReportRows(classItem, selectedFilters);
+            const totalStudents = sectionGroups.reduce((sum, group) => sum + group.students.length, 0);
+            if (!totalStudents) {
+                alert(selectedFilters.length ? 'No students found for the selected filter.' : 'No students found for the selected class.');
+                return;
+            }
+
+            const workbookHtml = buildSectionListWorkbookHtml(classItem, sectionGroups);
+            const blob = new Blob([workbookHtml], { type: 'application/vnd.ms-excel;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const fileName = `${String(classItem.name || 'section-list').replace(/[^\w\-]+/g, '_')}_section_list.xls`;
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
         }
 
         function renderAssignStudents() {
@@ -274,16 +815,32 @@
             const emptyState = document.getElementById('assignEmptyState');
             const countPill = document.getElementById('assignStudentCount');
             const summary = document.getElementById('assignClassSummary');
-            if (!select || !tbody || !emptyState || !countPill || !summary) return;
+            const note = document.getElementById('assignSectionNote');
+            const sectionSelect = document.getElementById('assignSectionSelect');
+            const sectionCount = document.getElementById('assignSectionCount');
+            if (!select || !tbody || !emptyState || !countPill || !summary || !sectionSelect || !sectionCount) return;
 
             const classItem = getAssignClassPool().find((item) => item.id === select.value);
+            const classSections = classItem ? getAssignSectionList(classItem) : [];
             tbody.innerHTML = '';
+            sectionSelect.innerHTML = '<option value="">Select section</option>';
+            sectionSelect.disabled = !classSections.length;
+            sectionCount.textContent = `${classSections.length} section${classSections.length === 1 ? '' : 's'}`;
+            classSections.forEach((sectionName) => {
+                const option = document.createElement('option');
+                option.value = sectionName;
+                option.textContent = sectionName;
+                sectionSelect.appendChild(option);
+            });
+            sectionSelect.value = '';
+            updateAssignActionState();
 
             if (!classItem) {
                 emptyState.style.display = 'block';
                 emptyState.textContent = 'Select a class to load students.';
                 countPill.textContent = '0 students';
                 summary.textContent = 'Choose a class to see section details and students.';
+                if (note) note.textContent = 'Select students, choose one section, then save to assign them all together.';
                 return;
             }
 
@@ -293,6 +850,11 @@
                 <strong style="color:var(--text-primary);">${classItem.name}</strong><br>
                 ${buildAssignClassMeta(classItem)}
             `;
+            if (note) {
+                note.textContent = classSections.length
+                    ? `Available sections for ${classItem.name}: ${classSections.join(', ')}`
+                    : `No sections are available for ${classItem.name}. Add sections in Classes first.`;
+            }
 
             if (!students.length) {
                 emptyState.style.display = 'block';
@@ -303,22 +865,135 @@
             emptyState.style.display = 'none';
             students.forEach((student) => {
                 const row = document.createElement('tr');
+                row.dataset.studentId = student.id || `${student.rollNo || ''}-${student.fullName || ''}`;
                 row.innerHTML = `
+                    <td class="select-col">
+                        <input type="checkbox" class="assign-row-toggle" data-student-id="${student.id || ''}" aria-label="Select ${student.fullName || 'student'}">
+                    </td>
                     <td><strong>${student.rollNo || '-'}</strong></td>
-                    <td>${student.fullName || '-'}</td>
+                    <td>
+                        <div class="assign-student-cell">
+                            <div class="assign-name-wrap">
+                                <strong>${student.fullName || '-'}</strong>
+                                ${getStudentSectionValue(student) ? `<small>Current section: ${getStudentSectionValue(student)}</small>` : '<small>No section assigned</small>'}
+                            </div>
+                        </div>
+                    </td>
                     <td>${student.fatherName || '-'}</td>
                     <td>${student.parentPhone || 'N/A'}</td>
                     <td>${student.campusName || student.branchName || student.campus || 'Main Campus'}</td>
                     <td>${student.classGrade || '-'}</td>
+                    <td>${getStudentSectionValue(student) || '<span class="assign-section-disabled">No section assigned</span>'}</td>
                 `;
                 tbody.appendChild(row);
+                const checkbox = row.querySelector('.assign-row-toggle');
+                if (checkbox) {
+                    checkbox.disabled = !classSections.length;
+                    checkbox.checked = false;
+                    checkbox.addEventListener('change', () => {
+                        toggleAssignRowSection(String(student.id || ''), checkbox.checked);
+                        updateAssignActionState();
+                    });
+                }
+                row.addEventListener('click', (event) => {
+                    const clickedInteractive = event.target.closest('select, button, a, input, label');
+                    if (clickedInteractive) return;
+                    if (!checkbox || checkbox.disabled) return;
+                    checkbox.checked = !checkbox.checked;
+                    toggleAssignRowSection(String(student.id || ''), checkbox.checked);
+                    updateAssignActionState();
+                });
             });
+
+            updateAssignActionState();
+        }
+
+        async function handleAssignSectionSave() {
+            const classItem = getSelectedAssignClassItem();
+            if (!classItem) {
+                alert('Please select a class first.');
+                return;
+            }
+
+            const selectedRows = Array.from(document.querySelectorAll('.assign-row-toggle:checked'))
+                .map((input) => ({ studentId: String(input.dataset.studentId || '').trim() }))
+                .filter((entry) => entry.studentId);
+
+            if (!selectedRows.length) {
+                alert('Please select at least one student.');
+                return;
+            }
+
+            const classSections = getAssignSectionList(classItem);
+            if (!classSections.length) {
+                alert(`No sections are available for ${classItem.name}.`);
+                return;
+            }
+
+            const sectionSelect = document.getElementById('assignSectionSelect');
+            const targetSection = String(sectionSelect?.value || '').trim();
+            if (!targetSection) {
+                alert('Please select one section for the selected students.');
+                return;
+            }
+            if (!classSections.includes(targetSection)) {
+                alert('Selected section is not available for this class.');
+                return;
+            }
+
+            const students = getData(STORAGE_KEY_STUDENTS);
+            const selectedStudentRecords = students.filter((student) => selectedRows.some((entry) => entry.studentId === String(student.id || '').trim()));
+            if (!selectedStudentRecords.length) {
+                alert('Selected students could not be found.');
+                return;
+            }
+
+            const shouldSave = typeof showAppConfirm === 'function'
+                ? await showAppConfirm(`Assign the selected students to their chosen sections in ${classItem.name}?`)
+                : confirm(`Assign the selected students to their chosen sections in ${classItem.name}?`);
+            if (!shouldSave) return;
+
+            const updatedStudents = students.map((student) => {
+                const studentId = String(student.id || '').trim();
+                if (!selectedRows.some((entry) => entry.studentId === studentId)) return student;
+                if (!matchesAssignClass(student, classItem)) return student;
+                return {
+                    ...student,
+                    section: targetSection
+                };
+            });
+
+            saveData(STORAGE_KEY_STUDENTS, updatedStudents);
+
+            alert(`${selectedStudentRecords.length} student(s) updated successfully.`);
+            renderAssignStudents();
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        function clearAssignSelections() {
+            document.querySelectorAll('.assign-row-toggle').forEach((checkbox) => {
+                checkbox.checked = false;
+            });
+            const sectionSelect = document.getElementById('assignSectionSelect');
+            if (sectionSelect) sectionSelect.value = '';
+            updateAssignActionState();
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             renderAssignClassSelect();
+            updateSectionListPreview();
             renderAssignStudents();
-            document.getElementById('assignClassSelect')?.addEventListener('change', renderAssignStudents);
+            document.getElementById('assignClassSelect')?.addEventListener('change', () => {
+                renderAssignStudents();
+            });
+            document.getElementById('sectionListClassSelect')?.addEventListener('change', updateSectionListPreview);
+            document.getElementById('sectionQuickFilterGrid')?.addEventListener('change', (event) => {
+                if (event.target?.classList?.contains('section-quick-filter')) updateSectionListPreview();
+            });
+            document.getElementById('downloadSectionListBtn')?.addEventListener('click', downloadSectionListReport);
+            document.getElementById('assignSectionSelect')?.addEventListener('change', updateAssignActionState);
+            document.getElementById('assignSaveBtn')?.addEventListener('click', handleAssignSectionSave);
+            document.getElementById('assignClearBtn')?.addEventListener('click', clearAssignSelections);
             if (window.lucide) window.lucide.createIcons();
         });
     </script>

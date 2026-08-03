@@ -1362,6 +1362,69 @@ async function listStudentDiaryEntries() {
     return rows.map(formatStudentDiaryEntry);
 }
 
+function normalizeSectionSubjectItems(subjects = []) {
+    const input = Array.isArray(subjects) ? subjects : [];
+    return input.map((item, index) => {
+        const subject = String(item?.subject || item?.name || '').trim();
+        return {
+            id: String(item?.id || `${Date.now()}-${index}-${Math.random().toString(36).slice(2, 8)}`),
+            subject,
+            teacherName: String(item?.teacherName || item?.teacher || '').trim(),
+            room: String(item?.room || '').trim(),
+            note: String(item?.note || item?.remarks || '').trim()
+        };
+    }).filter((item) => item.subject);
+}
+
+function normalizeSectionSubjectRecord(payload = {}) {
+    const now = new Date().toISOString();
+    const classGrade = String(payload.classGrade || payload.className || '').trim();
+    const section = String(payload.section || '').trim();
+    const subjectDate = String(payload.subjectDate || payload.date || '').trim();
+    const subjects = normalizeSectionSubjectItems(payload.subjects || []);
+    const campusName = String(payload.campusName || '').trim();
+    const notes = String(payload.notes || payload.description || '').trim();
+    const id = String(payload.id || `${classGrade}__${section}__${subjectDate}`.replace(/[^\w-]+/g, '_')).trim();
+
+    return {
+        id,
+        campusName,
+        classGrade,
+        section,
+        subjectDate,
+        subjects: JSON.stringify(subjects),
+        notes: notes || null,
+        createdByRole: String(payload.createdByRole || 'Admin').trim(),
+        createdByName: String(payload.createdByName || payload.createdBy || '').trim(),
+        createdAtLabel: String(payload.createdAtLabel || new Date(now).toLocaleString('en-GB')).trim(),
+        createdAt: payload.createdAt || now,
+        updatedAt: now
+    };
+}
+
+function formatSectionSubjectRecord(record) {
+    const raw = record && typeof record.toJSON === 'function' ? record.toJSON() : (record || {});
+    let subjects = raw.subjects;
+    if (typeof subjects === 'string') {
+        try {
+            subjects = JSON.parse(subjects);
+        } catch (_error) {
+            subjects = [];
+        }
+    }
+    return {
+        ...raw,
+        subjects: Array.isArray(subjects) ? subjects : []
+    };
+}
+
+async function listSectionSubjectRecords() {
+    const rows = await sequelize.models.SectionSubject.findAll({
+        order: [['subjectDate', 'DESC'], ['updatedAt', 'DESC']]
+    });
+    return rows.map(formatSectionSubjectRecord);
+}
+
 function normalizeStudentDiaryPayload(payload = {}) {
     const now = new Date().toISOString();
     const title = String(payload.title || payload.subject || '').trim();
@@ -1434,6 +1497,42 @@ async function deleteStudentDiaryById(req, res) {
 
 app.delete('/api/student-diary', deleteStudentDiaryById);
 app.delete('/api/student-diary/:id', deleteStudentDiaryById);
+
+app.get('/api/section-subjects', async (_req, res) => {
+    if (!sequelize) return res.status(503).json({ success: false, message: 'Database offline', sectionSubjects: [] });
+
+    try {
+        res.json({ success: true, sectionSubjects: await listSectionSubjectRecords() });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message, sectionSubjects: [] });
+    }
+});
+
+app.post('/api/section-subjects', authenticateToken, async (req, res) => {
+    if (!sequelize) return res.status(503).json({ success: false, message: 'Database offline', sectionSubjects: [] });
+
+    try {
+        const ok = await enforceActionPermission(req, res, 'classes', 'edit');
+        if (!ok) return;
+
+        const payload = normalizeSectionSubjectRecord(req.body || {});
+        if (!payload.classGrade || !payload.section || !payload.subjectDate) {
+            return res.status(400).json({ success: false, message: 'Class, section, and date are required.', sectionSubjects: await listSectionSubjectRecords() });
+        }
+
+        const subjects = JSON.parse(payload.subjects || '[]');
+        if (!subjects.length) {
+            return res.status(400).json({ success: false, message: 'Add at least one subject.', sectionSubjects: await listSectionSubjectRecords() });
+        }
+
+        await sequelize.models.SectionSubject.upsert(payload);
+        const sectionSubjects = await listSectionSubjectRecords();
+        io.emit('section_subjects_update', sectionSubjects);
+        res.json({ success: true, entry: formatSectionSubjectRecord(payload), sectionSubjects });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message, sectionSubjects: [] });
+    }
+});
 
 function normalizeMessageRole(value) {
     const role = String(value || '').trim().toLowerCase();
@@ -3503,6 +3602,7 @@ function defineStudentModel(db) {
         dueBalance: DataTypes.STRING,
         balance: DataTypes.STRING,
         feeFrequency: DataTypes.STRING,
+        section: DataTypes.STRING,
         feesStatus: { type: DataTypes.STRING, defaultValue: 'Pending' },
         enrollmentStatus: DataTypes.STRING,
         paymentDate: DataTypes.STRING,
@@ -3648,6 +3748,21 @@ function defineStudentDiaryModel(db) {
         createdByTeacherId: { type: DataTypes.STRING, allowNull: true },
         teacherId: { type: DataTypes.STRING, allowNull: true },
         teacherName: { type: DataTypes.STRING, allowNull: true },
+        createdAtLabel: { type: DataTypes.STRING, allowNull: true }
+    });
+}
+
+function defineSectionSubjectModel(db) {
+    return db.define('SectionSubject', {
+        id: { type: DataTypes.STRING, primaryKey: true },
+        campusName: { type: DataTypes.STRING, allowNull: true },
+        classGrade: { type: DataTypes.STRING, allowNull: false },
+        section: { type: DataTypes.STRING, allowNull: false },
+        subjectDate: { type: DataTypes.STRING, allowNull: false },
+        subjects: { type: DataTypes.TEXT('long'), allowNull: false },
+        notes: { type: DataTypes.TEXT('long'), allowNull: true },
+        createdByRole: { type: DataTypes.STRING, allowNull: true },
+        createdByName: { type: DataTypes.STRING, allowNull: true },
         createdAtLabel: { type: DataTypes.STRING, allowNull: true }
     });
 }
@@ -3958,6 +4073,7 @@ async function ensureLegacySchema() {
         dueBalance: { type: DataTypes.STRING, allowNull: true },
         balance: { type: DataTypes.STRING, allowNull: true },
         feeFrequency: { type: DataTypes.STRING, allowNull: true },
+        section: { type: DataTypes.STRING, allowNull: true },
         feesStatus: { type: DataTypes.STRING, allowNull: true },
         enrollmentStatus: { type: DataTypes.STRING, allowNull: true },
         paymentDate: { type: DataTypes.STRING, allowNull: true },
@@ -4088,6 +4204,7 @@ async function startServer() {
         defineFeeDueBalanceModel(sequelize);
         defineClassFeeModel(sequelize);
         defineStudentDiaryModel(sequelize);
+        defineSectionSubjectModel(sequelize);
         defineStudentAttendanceModel(sequelize);
         defineTeacherAttendanceModel(sequelize);
         defineSpecialNoticeModel(sequelize);

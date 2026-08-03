@@ -8,25 +8,284 @@
     <link rel="stylesheet" href="style.css?v=20260603-american-lyceum-brand">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        .section-page-hero, .section-card {
+        :root {
+            --panel-bg: rgba(255, 255, 255, 0.92);
+            --panel-border: rgba(148, 163, 184, 0.18);
+        }
+
+        .section-page-shell {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .section-page-hero,
+        .section-card {
             border-radius: 1.25rem;
-            border: 1px solid rgba(148, 163, 184, 0.18);
-            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid var(--panel-border);
+            background: var(--panel-bg);
             box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
         }
+
         .section-page-hero {
             padding: 1.4rem;
             background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(32, 176, 164, 0.08));
         }
-        .section-page-grid {
+
+        .section-layout {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.7fr);
             gap: 1rem;
+            align-items: start;
+        }
+
+        .summary-panel {
+            padding: 1rem;
+        }
+
+        .section-card {
+            padding: 1rem;
+        }
+
+        .section-card h3 {
+            margin: 0 0 0.35rem;
+        }
+
+        .section-card p {
+            margin: 0;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .filter-grid {
+            display: grid;
+            gap: 0.85rem;
             margin-top: 1rem;
         }
-        .section-card { padding: 1rem; }
-        .section-card h3 { margin: 0 0 0.4rem; }
-        .section-card p { margin: 0; color: var(--text-secondary); line-height: 1.6; }
+
+        .field {
+            display: grid;
+            gap: 0.35rem;
+        }
+
+        .field label {
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .field select {
+            width: 100%;
+            min-height: 46px;
+            border-radius: 0.95rem;
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            background: white;
+            padding: 0.82rem 0.95rem;
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .field select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(32, 176, 164, 0.12);
+        }
+
+        .report-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 0.95rem;
+        }
+
+        .action-btn {
+            border: 0;
+            border-radius: 999px;
+            padding: 0.78rem 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--primary-color), #0b6b63);
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: rgba(148, 163, 184, 0.14);
+            color: var(--text-primary);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin-top: 0;
+        }
+
+        .summary-card {
+            border-radius: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            background: rgba(248, 250, 252, 0.96);
+            padding: 0.9rem;
+            display: grid;
+            gap: 0.25rem;
+            min-height: 118px;
+        }
+
+        .summary-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 800;
+            color: var(--text-secondary);
+        }
+
+        .summary-value {
+            font-size: 1.55rem;
+            line-height: 1.1;
+            font-weight: 900;
+            color: var(--text-primary);
+        }
+
+        .summary-subtext {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .report-state {
+            margin-top: 1rem;
+            padding: 0.9rem 1rem;
+            border-radius: 1rem;
+            background: rgba(14, 116, 144, 0.08);
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .table-wrap {
+            margin-top: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 1rem;
+            overflow: auto;
+            background: white;
+        }
+
+        .report-table {
+            width: 100%;
+            min-width: 1080px;
+            border-collapse: collapse;
+        }
+
+        .report-table th,
+        .report-table td {
+            padding: 0.78rem 0.8rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .report-table th {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background: #f8fafc;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .student-name {
+            display: grid;
+            gap: 0.15rem;
+        }
+
+        .student-name strong {
+            color: var(--text-primary);
+            font-size: 0.96rem;
+        }
+
+        .student-name span,
+        .muted {
+            color: var(--text-secondary);
+            font-size: 0.84rem;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.35rem 0.6rem;
+            border-radius: 999px;
+            background: rgba(14, 116, 144, 0.08);
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            font-weight: 800;
+        }
+
+        .pill.good {
+            background: rgba(34, 197, 94, 0.12);
+            color: #166534;
+        }
+
+        .pill.warn {
+            background: rgba(245, 158, 11, 0.12);
+            color: #92400e;
+        }
+
+        .pill.bad {
+            background: rgba(239, 68, 68, 0.12);
+            color: #b91c1c;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.18);
+            overflow: hidden;
+            margin-top: 0.35rem;
+        }
+
+        .progress-bar span {
+            display: block;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #0ea5a8, #2563eb);
+        }
+
+        .empty-state {
+            padding: 1.2rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 1120px) {
+            .section-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 720px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -44,29 +303,610 @@
                 </div>
             </a>
         </aside>
+
         <main class="main-content">
             <header class="header">
                 <h1>Sections Report</h1>
             </header>
-            <section class="section-page-hero">
-                <div>
+
+            <section class="section-page-shell">
+                <div class="section-page-hero">
                     <div style="font-size:0.82rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--primary-color);">Manage Classes &amp; Sections</div>
-                    <h2 style="margin:0.35rem 0 0.5rem;">Review section-wise records and summaries.</h2>
-                    <p style="margin:0;color:var(--text-secondary);">This page is isolated from Class Management so reports can be expanded separately.</p>
+                    <h2 style="margin:0.35rem 0 0.5rem;">Review section-wise progress reports.</h2>
+                    <p style="margin:0;color:var(--text-secondary);">
+                        Select a class and section to load the complete student progress list for that section.
+                    </p>
+                </div>
+
+                <div class="section-layout">
+                    <div class="section-card">
+                        <h3>Report filters</h3>
+                        <p>Choose a class first, then pick the relevant section.</p>
+
+                        <div class="filter-grid">
+                            <div class="field">
+                                <label for="reportClassSelect">Class</label>
+                                <select id="reportClassSelect">
+                                    <option value="">Select class</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="reportSectionSelect">Section</label>
+                                <select id="reportSectionSelect" disabled>
+                                    <option value="">Select class first</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="report-toolbar">
+                            <div class="muted" id="reportHint">Select a class and section to view the report.</div>
+                            <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+                                <button type="button" class="action-btn secondary" id="reportRefreshBtn">Refresh</button>
+                                <button type="button" class="action-btn primary" id="reportPrintBtn">Print</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-card">
+                        <h3>Section progress report</h3>
+                        <p id="reportMetaText">Filtered student progress will appear here.</p>
+
+                        <div class="report-state" id="reportState">
+                            Please select a class and section to load the report.
+                        </div>
+
+                        <div class="table-wrap">
+                            <table class="report-table">
+                                <thead>
+                                    <tr>
+                                        <th>Roll No</th>
+                                        <th>Student</th>
+                                        <th>Father</th>
+                                        <th>Attendance</th>
+                                        <th>Latest Result</th>
+                                        <th>Progress</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reportTableBody">
+                                    <tr>
+                                        <td colspan="7" class="empty-state">Select a class and section to view all students.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-card summary-panel">
+                    <h3>Section performance overview</h3>
+                    <p>Quick summary for the selected class and section.</p>
+                    <div class="summary-grid" id="reportSummaryGrid">
+                        <div class="summary-card">
+                            <div class="summary-label">Students</div>
+                            <div class="summary-value">0</div>
+                            <div class="summary-subtext">No section selected yet.</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-label">Attendance</div>
+                            <div class="summary-value">-</div>
+                            <div class="summary-subtext">Average attendance in this section.</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-label">Result</div>
+                            <div class="summary-value">-</div>
+                            <div class="summary-subtext">Latest result performance.</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-label">Strongest</div>
+                            <div class="summary-value">-</div>
+                            <div class="summary-subtext">Top student in the chosen section.</div>
+                        </div>
+                    </div>
                 </div>
             </section>
-            <div class="section-page-grid">
-                <div class="section-card">
-                    <h3>Report summary</h3>
-                    <p>Use this page for section-level analysis, attendance, and class breakdowns.</p>
-                </div>
-                <div class="section-card">
-                    <h3>Next step</h3>
-                    <p>We can wire the real report tables once you confirm the desired columns.</p>
-                </div>
-            </div>
         </main>
     </div>
+
     <script src="auth.js?v=20260520-sidebar-requested-order"></script>
+    <script>
+        const API_BASE_URL = `${window.location.origin}/api`;
+        const STORAGE_KEY_CLASSES = 'eduCore_classes';
+        const STORAGE_KEY_STUDENTS = 'eduCore_students';
+        const STORAGE_KEY_ATTENDANCE = 'eduCore_student_attendance';
+        const STORAGE_KEY_RESULTS = 'APEXIUMS_RESULT_CARD_ARCHIVE_V2';
+
+        let reportStudents = [];
+        let reportAttendance = {};
+        let reportResults = [];
+
+        function normalizeText(value) {
+            return String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[char]));
+        }
+
+        function formatNumber(value, digits = 0) {
+            const parsed = Number(value);
+            if (!Number.isFinite(parsed)) return '-';
+            return parsed.toFixed(digits).replace(/\.0+$/, '');
+        }
+
+        function toNumber(value) {
+            const parsed = Number(String(value ?? '').replace(/,/g, ''));
+            return Number.isFinite(parsed) ? parsed : 0;
+        }
+
+        function getStoredData(key, fallback = []) {
+            try {
+                const parsed = JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
+                return Array.isArray(parsed) ? parsed : fallback;
+            } catch (_error) {
+                return fallback;
+            }
+        }
+
+        function parseApiList(payload, keys = []) {
+            if (Array.isArray(payload)) return payload;
+            if (payload && typeof payload === 'object') {
+                for (const key of keys) {
+                    if (Array.isArray(payload[key])) return payload[key];
+                }
+            }
+            return [];
+        }
+
+        function normalizeClassItem(item = {}) {
+            const name = String(item.name || item.classGrade || item.className || '').trim();
+            const rawSections = Array.isArray(item.sections)
+                ? item.sections
+                : String(item.section || '').split(',').map((section) => section.trim()).filter(Boolean);
+            return {
+                id: String(item.id || normalizeText(name).replace(/\s+/g, '-')),
+                name,
+                sections: Array.from(new Set(rawSections)).filter(Boolean)
+            };
+        }
+
+        function getClassPool() {
+            const classMap = new Map();
+            getStoredData(STORAGE_KEY_CLASSES).forEach((item) => {
+                const normalized = normalizeClassItem(item);
+                if (!normalized.name) return;
+                classMap.set(normalizeText(normalized.name), normalized);
+            });
+
+            reportStudents.forEach((student) => {
+                const className = String(student.classGrade || '').trim();
+                if (!className) return;
+                const key = normalizeText(className);
+                const existing = classMap.get(key) || {
+                    id: key.replace(/\s+/g, '-'),
+                    name: className,
+                    sections: []
+                };
+                const section = String(student.section || student.assignedSection || '').trim();
+                if (section && !existing.sections.includes(section)) {
+                    existing.sections.push(section);
+                }
+                classMap.set(key, existing);
+            });
+
+            return Array.from(classMap.values()).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
+        }
+
+        function getSelectedClassItem() {
+            const classId = document.getElementById('reportClassSelect')?.value || '';
+            return getClassPool().find((item) => item.id === classId) || null;
+        }
+
+        function renderClassOptions() {
+            const classSelect = document.getElementById('reportClassSelect');
+            if (!classSelect) return;
+            const classes = getClassPool();
+            classSelect.innerHTML = '<option value="">Select class</option>';
+            classes.forEach((classItem) => {
+                const option = document.createElement('option');
+                option.value = classItem.id;
+                option.textContent = classItem.name;
+                classSelect.appendChild(option);
+            });
+        }
+
+        function renderSectionOptions() {
+            const sectionSelect = document.getElementById('reportSectionSelect');
+            const classItem = getSelectedClassItem();
+            if (!sectionSelect) return;
+
+            sectionSelect.innerHTML = '<option value="">Select section</option>';
+            if (!classItem) {
+                sectionSelect.disabled = true;
+                sectionSelect.innerHTML = '<option value="">Select class first</option>';
+                return;
+            }
+
+            const sections = Array.from(new Set((Array.isArray(classItem.sections) ? classItem.sections : [])
+                .map((section) => String(section || '').trim())
+                .filter(Boolean)));
+
+            if (!sections.length) {
+                sectionSelect.disabled = true;
+                sectionSelect.innerHTML = '<option value="">No sections found</option>';
+                document.getElementById('reportHint').textContent = `No sections found for ${classItem.name}.`;
+                return;
+            }
+
+            sectionSelect.disabled = false;
+            sections.forEach((section) => {
+                const option = document.createElement('option');
+                option.value = section;
+                option.textContent = section;
+                sectionSelect.appendChild(option);
+            });
+            document.getElementById('reportHint').textContent = `Available sections for ${classItem.name}: ${sections.join(', ')}`;
+        }
+
+        function normalizeAttendanceStatus(status) {
+            const value = String(status || '').trim().toLowerCase();
+            if (value === 'p' || value === 'present') return 'Present';
+            if (value === 'a' || value === 'absent') return 'Absent';
+            if (value === 'late') return 'Late';
+            if (value === 'leave') return 'Leave';
+            return '';
+        }
+
+        function getStudentIdentityCandidates(student = {}) {
+            return [
+                student.id,
+                student.studentCode,
+                student.rollNo,
+                student.formB,
+                student.parentPhone
+            ].map((value) => normalizeText(value)).filter(Boolean);
+        }
+
+        function getStudentAttendanceRecords(student = {}) {
+            const store = reportAttendance && typeof reportAttendance === 'object' ? reportAttendance : {};
+            const candidates = getStudentIdentityCandidates(student);
+            const matchKey = Object.keys(store).find((key) => candidates.includes(normalizeText(key)));
+            const records = matchKey && Array.isArray(store[matchKey]) ? store[matchKey] : [];
+            return records
+                .map((item) => (typeof item === 'string' ? { status: item } : item))
+                .filter((item) => normalizeAttendanceStatus(item.status));
+        }
+
+        function getAttendanceSummary(student = {}) {
+            const records = getStudentAttendanceRecords(student);
+            if (!records.length) {
+                return { percent: null, present: 0, absent: 0, late: 0, leave: 0, total: 0 };
+            }
+
+            const summary = records.reduce((acc, record) => {
+                const status = normalizeAttendanceStatus(record.status);
+                if (status === 'Present') acc.present += 1;
+                if (status === 'Absent') acc.absent += 1;
+                if (status === 'Late') acc.late += 1;
+                if (status === 'Leave') acc.leave += 1;
+                return acc;
+            }, { present: 0, absent: 0, late: 0, leave: 0 });
+
+            const total = summary.present + summary.absent + summary.late + summary.leave;
+            const percent = total ? ((summary.present + (summary.late * 0.5)) / total) * 100 : null;
+            return { ...summary, total, percent };
+        }
+
+        function normalizeResultRecord(record = {}) {
+            let subjects = record.subjects || [];
+            if (typeof subjects === 'string') {
+                try {
+                    subjects = JSON.parse(subjects);
+                } catch (_error) {
+                    subjects = [];
+                }
+            }
+
+            return {
+                ...record,
+                subjects: Array.isArray(subjects) ? subjects : [],
+                studentLookupId: record.studentLookupId || record.studentId || record.rollNo || record.studentRollNo || '',
+                studentName: record.studentName || record.name || ''
+            };
+        }
+
+        function getResultRecordDate(record = {}) {
+            const value = record.resultDate || record.examDate || record.updatedAt || record.createdAt || '';
+            const parsed = new Date(value);
+            return Number.isNaN(parsed.getTime()) ? String(value).slice(0, 10) : parsed.toISOString().slice(0, 10);
+        }
+
+        function calculateResultPercentage(result = {}) {
+            const subjects = Array.isArray(result.subjects) ? result.subjects : [];
+            const totalMarks = subjects.reduce((sum, item) => sum + toNumber(item.max || item.totalMarks), 0);
+            const obtainedMarks = subjects.reduce((sum, item) => sum + toNumber(item.obtained || item.obtainedMarks), 0);
+            return totalMarks ? (obtainedMarks / totalMarks) * 100 : null;
+        }
+
+        function getResultCandidates(student = {}) {
+            return getStudentIdentityCandidates(student).concat(normalizeText(student.fullName));
+        }
+
+        function getStudentResults(student = {}) {
+            const candidates = getResultCandidates(student);
+            return reportResults
+                .filter((record) => {
+                    const recordCandidates = [
+                        record.studentLookupId,
+                        record.studentId,
+                        record.rollNo,
+                        record.studentRollNo,
+                        record.studentName
+                    ].map((value) => normalizeText(value)).filter(Boolean);
+                    return recordCandidates.some((candidate) => candidates.includes(candidate));
+                })
+                .sort((a, b) => new Date(b.updatedAt || b.resultDate || b.createdAt || 0) - new Date(a.updatedAt || a.resultDate || a.createdAt || 0));
+        }
+
+        function getLatestStudentResult(student = {}) {
+            return getStudentResults(student)[0] || null;
+        }
+
+        function getStatusPillClass(attendancePercent, resultPercent) {
+            const scores = [attendancePercent, resultPercent].filter((value) => typeof value === 'number');
+            const score = scores.length ? (scores.reduce((sum, value) => sum + value, 0) / scores.length) : null;
+            if (score === null) return 'warn';
+            if (score >= 75) return 'good';
+            if (score >= 45) return 'warn';
+            return 'bad';
+        }
+
+        function renderSummary(filteredStudents = []) {
+            const averageAttendance = filteredStudents
+                .map((student) => getAttendanceSummary(student).percent)
+                .filter((value) => typeof value === 'number');
+            const latestResults = filteredStudents
+                .map((student) => calculateResultPercentage(getLatestStudentResult(student) || {}))
+                .filter((value) => typeof value === 'number');
+            const topStudent = filteredStudents
+                .map((student) => {
+                    const resultPercent = calculateResultPercentage(getLatestStudentResult(student) || {});
+                    const attendancePercent = getAttendanceSummary(student).percent;
+                    const scores = [attendancePercent, resultPercent].filter((value) => typeof value === 'number');
+                    return scores.length ? {
+                        name: student.fullName || '-',
+                        score: scores.reduce((sum, value) => sum + value, 0) / scores.length
+                    } : null;
+                })
+                .filter(Boolean)
+                .sort((a, b) => b.score - a.score)[0] || null;
+
+            const summaryGrid = document.getElementById('reportSummaryGrid');
+            if (!summaryGrid) return;
+
+            const averageAttendanceValue = averageAttendance.length
+                ? `${formatNumber(averageAttendance.reduce((sum, value) => sum + value, 0) / averageAttendance.length, 1)}%`
+                : '-';
+            const averageResultValue = latestResults.length
+                ? `${formatNumber(latestResults.reduce((sum, value) => sum + value, 0) / latestResults.length, 1)}%`
+                : '-';
+
+            summaryGrid.innerHTML = `
+                <div class="summary-card">
+                    <div class="summary-label">Students</div>
+                    <div class="summary-value">${filteredStudents.length}</div>
+                    <div class="summary-subtext">Students in the selected section.</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Attendance</div>
+                    <div class="summary-value">${averageAttendanceValue}</div>
+                    <div class="summary-subtext">Average attendance percentage.</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Result</div>
+                    <div class="summary-value">${averageResultValue}</div>
+                    <div class="summary-subtext">Average latest result percentage.</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Strongest</div>
+                    <div class="summary-value">${topStudent ? formatNumber(topStudent.score, 1) + '%' : '-'}</div>
+                    <div class="summary-subtext">${topStudent ? escapeHtml(topStudent.name) : 'No result available yet.'}</div>
+                </div>
+            `;
+        }
+
+        function renderReportTable(filteredStudents = []) {
+            const body = document.getElementById('reportTableBody');
+            const state = document.getElementById('reportState');
+            const meta = document.getElementById('reportMetaText');
+            if (!body || !state || !meta) return;
+
+            const classItem = getSelectedClassItem();
+            const section = document.getElementById('reportSectionSelect')?.value || '';
+            const sectionLabel = classItem ? `${classItem.name}${section ? ` - Section ${section}` : ''}` : 'No class selected';
+            meta.textContent = filteredStudents.length
+                ? `${filteredStudents.length} student(s) found for ${sectionLabel}.`
+                : `No students found for ${sectionLabel}.`;
+
+            state.textContent = filteredStudents.length
+                ? `Loaded ${filteredStudents.length} student progress record(s) for ${sectionLabel}.`
+                : 'No student records matched the selected class and section.';
+
+            if (!filteredStudents.length) {
+                body.innerHTML = '<tr><td colspan="7" class="empty-state">No students found in this section.</td></tr>';
+                return;
+            }
+
+            body.innerHTML = filteredStudents.map((student) => {
+                const attendance = getAttendanceSummary(student);
+                const latestResult = getLatestStudentResult(student);
+                const resultPercent = latestResult ? calculateResultPercentage(latestResult) : null;
+                const attendanceText = attendance.percent === null ? '-' : `${formatNumber(attendance.percent, 1)}%`;
+                const resultText = resultPercent === null ? '-' : `${formatNumber(resultPercent, 1)}%`;
+                const scoreCandidates = [attendance.percent, resultPercent].filter((value) => typeof value === 'number');
+                const overall = scoreCandidates.length
+                    ? scoreCandidates.reduce((sum, value) => sum + value, 0) / scoreCandidates.length
+                    : null;
+                const pillClass = getStatusPillClass(attendance.percent, resultPercent);
+                const statusText = overall === null ? 'No data' : overall >= 75 ? 'Strong' : overall >= 45 ? 'Average' : 'Needs support';
+                const progressWidth = overall === null ? 0 : Math.max(0, Math.min(100, overall));
+
+                return `
+                    <tr>
+                        <td><strong>${escapeHtml(student.rollNo || student.studentCode || '-')}</strong></td>
+                        <td>
+                            <div class="student-name">
+                                <strong>${escapeHtml(student.fullName || '-')}</strong>
+                                <span>${escapeHtml(student.classGrade || '-')} ${student.section ? `- Section ${escapeHtml(student.section)}` : ''}</span>
+                            </div>
+                        </td>
+                        <td>${escapeHtml(student.fatherName || '-')}</td>
+                        <td>
+                            <div>${escapeHtml(attendanceText)}</div>
+                            <div class="muted">${attendance.total ? `${attendance.present}P / ${attendance.absent}A / ${attendance.late}L / ${attendance.leave}Leave` : 'No attendance records'}</div>
+                        </td>
+                        <td>
+                            <div>${escapeHtml(resultText)}</div>
+                            <div class="muted">${latestResult ? escapeHtml(latestResult.termTitle || latestResult.examName || getResultRecordDate(latestResult) || '-') : 'No result published'}</div>
+                        </td>
+                        <td>
+                            <div>${overall === null ? '-' : `${formatNumber(overall, 1)}%`}</div>
+                            <div class="progress-bar"><span style="width:${progressWidth}%"></span></div>
+                        </td>
+                        <td>
+                            <span class="pill ${pillClass}">${escapeHtml(statusText)}</span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterStudentsBySelection() {
+            const classItem = getSelectedClassItem();
+            const section = String(document.getElementById('reportSectionSelect')?.value || '').trim();
+            if (!classItem || !section) {
+                renderSummary([]);
+                renderReportTable([]);
+                return;
+            }
+
+            const filteredStudents = reportStudents.filter((student) => (
+                normalizeText(student.classGrade) === normalizeText(classItem.name) &&
+                normalizeText(student.section || student.assignedSection || '') === normalizeText(section)
+            ));
+
+            renderSummary(filteredStudents);
+            renderReportTable(filteredStudents);
+        }
+
+        async function loadReportData() {
+            const token = window.sessionStorage.getItem('eduCore_token') || '';
+            const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+            const [studentsResponse, attendanceResponse, resultsResponse] = await Promise.all([
+                fetch(`${API_BASE_URL}/students`, { headers }),
+                fetch(`${API_BASE_URL}/student-attendance`, { headers }),
+                fetch(`${API_BASE_URL}/student-results`, { headers })
+            ]);
+
+            const studentsPayload = await studentsResponse.json().catch(() => []);
+            const attendancePayload = await attendanceResponse.json().catch(() => ({}));
+            const resultsPayload = await resultsResponse.json().catch(() => ({}));
+
+            reportStudents = parseApiList(studentsPayload, ['students', 'data', 'items']).map((student) => ({
+                ...student,
+                classGrade: String(student.classGrade || '').trim(),
+                section: String(student.section || student.assignedSection || '').trim()
+            }));
+
+            reportAttendance = attendancePayload?.attendance && typeof attendancePayload.attendance === 'object'
+                ? attendancePayload.attendance
+                : (reportAttendance || JSON.parse(localStorage.getItem(STORAGE_KEY_ATTENDANCE) || '{}'));
+
+            const resultList = parseApiList(resultsPayload, ['results', 'studentResults', 'records']).map(normalizeResultRecord);
+            reportResults = resultList.length
+                ? resultList
+                : getStoredData(STORAGE_KEY_RESULTS).map(normalizeResultRecord);
+
+            localStorage.setItem(STORAGE_KEY_STUDENTS, JSON.stringify(reportStudents));
+            localStorage.setItem(STORAGE_KEY_ATTENDANCE, JSON.stringify(reportAttendance));
+            localStorage.setItem(STORAGE_KEY_RESULTS, JSON.stringify(reportResults));
+        }
+
+        function printReport() {
+            const classItem = getSelectedClassItem();
+            const section = document.getElementById('reportSectionSelect')?.value || '';
+            const title = classItem ? `${classItem.name}${section ? ` - Section ${section}` : ''}` : 'Section Report';
+            const table = document.querySelector('.report-table')?.outerHTML || '';
+            const summary = document.getElementById('reportSummaryGrid')?.outerHTML || '';
+            const popup = window.open('', '_blank', 'width=1200,height=900');
+            if (!popup) return;
+            popup.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>${escapeHtml(title)}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 24px; color: #0f172a; }
+                        h1 { margin: 0 0 8px; }
+                        .summary-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin: 18px 0; }
+                        .summary-card { border:1px solid #e2e8f0; border-radius:14px; padding:14px; }
+                        .summary-label { font-size:12px; letter-spacing:0.05em; text-transform:uppercase; color:#64748b; font-weight:700; }
+                        .summary-value { font-size:24px; font-weight:900; margin-top:4px; }
+                        .summary-subtext { color:#64748b; margin-top:4px; }
+                        table { width:100%; border-collapse:collapse; min-width:1080px; }
+                        th, td { border-bottom:1px solid #e2e8f0; padding:10px; text-align:left; vertical-align:top; }
+                        th { background:#f8fafc; text-transform:uppercase; font-size:12px; letter-spacing:0.05em; }
+                        .pill { display:inline-block; padding:4px 8px; border-radius:999px; background:#e2e8f0; }
+                        .progress-bar { width:100%; height:8px; border-radius:999px; background:#e2e8f0; overflow:hidden; margin-top:6px; }
+                        .progress-bar span { display:block; height:100%; background:linear-gradient(90deg,#0ea5a8,#2563eb); }
+                    </style>
+                </head>
+                <body>
+                    <h1>${escapeHtml(title)}</h1>
+                    <div>${escapeHtml(document.getElementById('reportMetaText')?.textContent || '')}</div>
+                    ${summary}
+                    ${table}
+                    <script>window.onload = () => window.print();<\/script>
+                </body>
+                </html>
+            `);
+            popup.document.close();
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            renderClassOptions();
+            renderSectionOptions();
+            try {
+                await loadReportData();
+                renderClassOptions();
+                renderSectionOptions();
+            } catch (error) {
+                console.error('Section report data could not be loaded:', error);
+            }
+            filterStudentsBySelection();
+
+            document.getElementById('reportClassSelect')?.addEventListener('change', () => {
+                renderSectionOptions();
+                filterStudentsBySelection();
+            });
+            document.getElementById('reportSectionSelect')?.addEventListener('change', filterStudentsBySelection);
+            document.getElementById('reportRefreshBtn')?.addEventListener('click', async () => {
+                await loadReportData();
+                renderClassOptions();
+                renderSectionOptions();
+                filterStudentsBySelection();
+            });
+            document.getElementById('reportPrintBtn')?.addEventListener('click', printReport);
+
+            if (window.lucide?.createIcons) window.lucide.createIcons();
+        });
+    </script>
 </body>
 </html>

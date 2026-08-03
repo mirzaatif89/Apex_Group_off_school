@@ -2898,6 +2898,13 @@
             <div class="empty-note" id="studentTimeTableEmpty">No timetable has been added for your class yet.</div>
         </section>
 
+        <section class="panel-card student-portal-section" id="studentSectionSubjectsSection" style="display:none; margin-bottom: 1.25rem;">
+            <h3>Section Subjects</h3>
+            <p style="margin:0 0 0.9rem;color:var(--text-secondary);">Subjects published for your class section will appear here.</p>
+            <div class="portal-content-list" id="studentSectionSubjectsList"></div>
+            <div class="empty-note" id="studentSectionSubjectsEmpty">No section subjects have been published yet.</div>
+        </section>
+
         <section class="panel-card student-portal-section" id="studentPerformanceSection" style="display:none; margin-bottom: 1.25rem;">
             <h3>Performance</h3>
             <div class="mini-grid">
@@ -2946,6 +2953,7 @@
         const STUDENT_DIARY_KEY = 'eduCore_student_diaries';
         const STUDENT_LEAVE_KEY = 'eduCore_student_leave_requests';
         const STUDENT_COURSE_KEY = 'eduCore_student_courses';
+        const STUDENT_SECTION_SUBJECTS_KEY = 'eduCore_section_subjects';
         const STUDENT_QUIZ_KEY = 'eduCore_student_quizzes';
         const STUDENT_QUIZ_SUBMISSION_KEY = 'eduCore_student_quiz_submissions';
         const STUDENT_UPLOADED_LECTURE_KEY = 'eduCore_uploaded_lectures';
@@ -3433,6 +3441,75 @@
                     <td>${escapeHtml(item.room || '-')}</td>
                 </tr>
             `).join('');
+        }
+
+        function getStudentSectionSubjects(student = {}) {
+            const className = normalizeClassName(student.classGrade);
+            const sectionName = normalizeClassName(student.section || student.assignedSection || '');
+            if (!className || !sectionName) return [];
+
+            return getPortalData(STUDENT_SECTION_SUBJECTS_KEY)
+                .filter((record) => normalizeClassName(record.classGrade) === className && normalizeClassName(record.section) === sectionName)
+                .sort((a, b) => String(b.subjectDate || b.updatedAt || b.createdAt || '').localeCompare(String(a.subjectDate || a.updatedAt || a.createdAt || '')));
+        }
+
+        function renderStudentSectionSubjects(student = {}) {
+            const list = document.getElementById('studentSectionSubjectsList');
+            const empty = document.getElementById('studentSectionSubjectsEmpty');
+            const section = document.getElementById('studentSectionSubjectsSection');
+            if (!list || !empty) return;
+            if (section) section.style.display = 'block';
+
+            const records = getStudentSectionSubjects(student);
+            if (!student.section && !student.assignedSection) {
+                list.innerHTML = '';
+                empty.textContent = 'This student does not have a section assigned yet.';
+                empty.style.display = 'block';
+                return;
+            }
+
+            if (!records.length) {
+                list.innerHTML = '';
+                empty.textContent = 'No section subjects have been published for your class section yet.';
+                empty.style.display = 'block';
+                return;
+            }
+
+            empty.style.display = 'none';
+            list.innerHTML = records.map((record) => {
+                const subjects = Array.isArray(record.subjects) ? record.subjects : [];
+                return `
+                    <article class="portal-content-card">
+                        <h4>${escapeHtml(record.classGrade || '-')} - Section ${escapeHtml(record.section || '-')}</h4>
+                        <div class="portal-content-meta">${escapeHtml(record.subjectDate || '-')} ${record.createdAtLabel ? `| ${escapeHtml(record.createdAtLabel)}` : ''}</div>
+                        ${record.notes ? `<p>${escapeHtml(record.notes)}</p>` : ''}
+                        <div class="portal-diary-subjects">
+                            ${subjects.map((subject) => `
+                                <div class="portal-diary-subject">
+                                    <strong>${escapeHtml(subject.subject || '-')}</strong>
+                                    <p>${escapeHtml([subject.teacherName, subject.room].filter(Boolean).join(' | ') || 'No extra details')}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </article>
+                `;
+            }).join('');
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        async function loadSectionSubjectsForPortal(student = getCurrentPortalStudent()) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/section-subjects`, {
+                    headers: { Authorization: `Bearer ${authToken}` }
+                });
+                const result = await response.json().catch(() => ({}));
+                if (response.ok && result?.success && Array.isArray(result.sectionSubjects)) {
+                    localStorage.setItem(STUDENT_SECTION_SUBJECTS_KEY, JSON.stringify(result.sectionSubjects));
+                }
+            } catch (_error) {
+                // Keep locally cached section subjects visible if the API is temporarily unavailable.
+            }
+            renderStudentSectionSubjects(student);
         }
 
         function getPortalData(key) {
@@ -4898,6 +4975,7 @@
                     await loadStudentDiaryForPortal(student);
                     await loadStudentCoursesForPortal(student);
                     await loadStudentUploadedLecturesForPortal(student);
+                    await loadSectionSubjectsForPortal(student);
                     await loadStudentResultsFromApi();
                     applyStudentAttendance(student);
                     applyStudentPerformance(student);
@@ -5732,6 +5810,7 @@
             applyStudentFees(student);
             applyStudentTimeTable(student);
             applyStudentDiary(student);
+            renderStudentSectionSubjects(student);
             applyStudentCourse(student);
             renderStudentAssignmentSubmissions(student);
             renderStudentUploadedAssignments(student);
@@ -5861,6 +5940,7 @@
                 await loadStudentDiaryForPortal(student);
                 await loadStudentCoursesForPortal(student);
                 await loadStudentUploadedLecturesForPortal(student);
+                await loadSectionSubjectsForPortal(student);
                 await loadStudentResultsFromApi();
                 await mergeStudentFeePaymentsIntoMonthlyStore();
                 applyStudentData(student);
@@ -5878,6 +5958,7 @@
                     await loadStudentDiaryForPortal(fallbackStudent);
                     await loadStudentCoursesForPortal(fallbackStudent);
                     await loadStudentUploadedLecturesForPortal(fallbackStudent);
+                    await loadSectionSubjectsForPortal(fallbackStudent);
                     await loadStudentResultsFromApi();
                     await mergeStudentFeePaymentsIntoMonthlyStore();
                     applyStudentData(fallbackStudent);

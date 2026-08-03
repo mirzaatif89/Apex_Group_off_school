@@ -8,25 +8,258 @@
     <link rel="stylesheet" href="style.css?v=20260603-american-lyceum-brand">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        .section-page-hero, .section-card {
+        :root {
+            --panel-bg: rgba(255, 255, 255, 0.92);
+            --panel-border: rgba(148, 163, 184, 0.18);
+        }
+
+        .section-page-shell {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .section-page-hero,
+        .section-card {
             border-radius: 1.25rem;
-            border: 1px solid rgba(148, 163, 184, 0.18);
-            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid var(--panel-border);
+            background: var(--panel-bg);
             box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
         }
+
         .section-page-hero {
             padding: 1.4rem;
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(32, 176, 164, 0.08));
         }
-        .section-page-grid {
+
+        .section-layout {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
             gap: 1rem;
+            align-items: start;
+        }
+
+        .section-card {
+            padding: 1rem;
+        }
+
+        .section-card h3 {
+            margin: 0 0 0.35rem;
+        }
+
+        .section-card p {
+            margin: 0;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .subject-form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.85rem;
             margin-top: 1rem;
         }
-        .section-card { padding: 1rem; }
-        .section-card h3 { margin: 0 0 0.4rem; }
-        .section-card p { margin: 0; color: var(--text-secondary); line-height: 1.6; }
+
+        .field {
+            display: grid;
+            gap: 0.35rem;
+        }
+
+        .field label {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            border-radius: 0.95rem;
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            background: white;
+            padding: 0.82rem 0.95rem;
+            color: var(--text-primary);
+            outline: none;
+            min-height: 46px;
+        }
+
+        .field textarea {
+            min-height: 84px;
+            resize: vertical;
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(32, 176, 164, 0.12);
+        }
+
+        .section-note {
+            padding: 0.8rem 0.9rem;
+            border-radius: 0.9rem;
+            background: rgba(32, 176, 164, 0.08);
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        .subject-rows {
+            display: grid;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .subject-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 0.8fr) minmax(0, 1fr) auto;
+            gap: 0.7rem;
+            align-items: end;
+            padding: 0.85rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            background: rgba(248, 250, 252, 0.92);
+        }
+
+        .subject-row .field {
+            margin: 0;
+        }
+
+        .subject-row .remove-subject-btn {
+            border: 0;
+            border-radius: 0.9rem;
+            background: rgba(239, 68, 68, 0.1);
+            color: #b91c1c;
+            width: 44px;
+            height: 44px;
+            cursor: pointer;
+        }
+
+        .subject-row .remove-subject-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .toolbar-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .action-btn {
+            border: 0;
+            border-radius: 999px;
+            padding: 0.8rem 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--primary-color), #0b6b63);
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: rgba(148, 163, 184, 0.14);
+            color: var(--text-primary);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .saved-list {
+            display: grid;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .saved-item {
+            padding: 0.9rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            background: rgba(255, 255, 255, 0.92);
+            display: grid;
+            gap: 0.7rem;
+        }
+
+        .saved-item-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .saved-pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+        }
+
+        .saved-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.65rem;
+            border-radius: 999px;
+            background: rgba(14, 116, 144, 0.08);
+            color: var(--text-primary);
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .subject-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .subject-table th,
+        .subject-table td {
+            padding: 0.65rem 0.7rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .subject-table th {
+            color: var(--text-primary);
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .empty-state {
+            padding: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        @media (max-width: 1100px) {
+            .section-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .subject-form-grid,
+            .subject-row {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -44,29 +277,426 @@
                 </div>
             </a>
         </aside>
+
         <main class="main-content">
             <header class="header">
                 <h1>Sections wise Subjects</h1>
             </header>
-            <section class="section-page-hero">
-                <div>
+
+            <section class="section-page-shell">
+                <div class="section-page-hero">
                     <div style="font-size:0.82rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--primary-color);">Manage Classes &amp; Sections</div>
                     <h2 style="margin:0.35rem 0 0.5rem;">Map subjects to each section.</h2>
-                    <p style="margin:0;color:var(--text-secondary);">Use this page for subject allocation at section level instead of keeping it inside the main Classes page.</p>
+                    <p style="margin:0;color:var(--text-secondary);">
+                        Select a class, choose a section, set a date, and save the subject list so it can appear in the student portal too.
+                    </p>
+                </div>
+
+                <div class="section-layout">
+                    <div class="section-card">
+                        <h3>Section wise subject setup</h3>
+                        <p>Define the subjects that belong to a class section and keep the portal in sync.</p>
+
+                        <form id="sectionSubjectForm">
+                            <div class="subject-form-grid">
+                                <div class="field">
+                                    <label for="subjectClassSelect">Class</label>
+                                    <select id="subjectClassSelect" required>
+                                        <option value="">Select class</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <label for="subjectSectionSelect">Section</label>
+                                    <select id="subjectSectionSelect" required disabled>
+                                        <option value="">Select class first</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <label for="subjectDate">Date</label>
+                                    <input type="date" id="subjectDate" required>
+                                </div>
+                            </div>
+
+                            <div class="field" style="margin-top:0.85rem;">
+                                <label for="sectionNotes">Notes</label>
+                                <textarea id="sectionNotes" placeholder="Optional notes for this section mapping"></textarea>
+                            </div>
+
+                            <div class="toolbar-row">
+                                <div>
+                                    <h3 style="margin:0;">Subjects</h3>
+                                    <p style="margin:0.2rem 0 0;color:var(--text-secondary);">Add one or more subjects for the selected section.</p>
+                                </div>
+                                <div class="button-row">
+                                    <button type="button" class="action-btn secondary" id="addSubjectRowBtn">Add Subject</button>
+                                    <button type="submit" class="action-btn primary" id="saveSectionSubjectsBtn">Submit</button>
+                                </div>
+                            </div>
+
+                            <div class="subject-rows" id="subjectRows"></div>
+                            <div class="section-note" id="sectionSubjectNote" style="margin-top:0.85rem;">
+                                Choose a class and section, then add the subject list for that section.
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="section-card">
+                        <h3>Saved Records</h3>
+                        <p>Latest section subject mappings saved in the database.</p>
+                        <div class="saved-list" id="savedSectionSubjectsList">
+                            <div class="empty-state">No section subjects saved yet.</div>
+                        </div>
+                    </div>
                 </div>
             </section>
-            <div class="section-page-grid">
-                <div class="section-card">
-                    <h3>Section wise subject setup</h3>
-                    <p>Define which subjects belong to which section and keep timetable planning easier.</p>
-                </div>
-                <div class="section-card">
-                    <h3>Ready for forms</h3>
-                    <p>We can add the subject mapping form and saved records on this page next.</p>
-                </div>
-            </div>
         </main>
     </div>
+
     <script src="auth.js?v=20260520-sidebar-requested-order"></script>
+    <script>
+        const STORAGE_KEY_CLASSES = 'eduCore_classes';
+        const STORAGE_KEY_STUDENTS = 'eduCore_students';
+        const STORAGE_KEY_SECTION_SUBJECTS = 'eduCore_section_subjects';
+        const API_BASE_URL = `${window.location.origin}/api`;
+
+        function normalizeText(value) {
+            return String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[char]));
+        }
+
+        function getStoredData(key) {
+            try {
+                const parsed = JSON.parse(localStorage.getItem(key) || '[]');
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (_error) {
+                return [];
+            }
+        }
+
+        function getClassPool() {
+            const classMap = new Map();
+            const storedClasses = getStoredData(STORAGE_KEY_CLASSES);
+            const students = getStoredData(STORAGE_KEY_STUDENTS);
+
+            const pushClass = (item) => {
+                const name = String(item?.name || item?.classGrade || '').trim();
+                if (!name) return;
+                const key = normalizeText(name);
+                if (classMap.has(key)) return;
+                const sectionsFromClass = Array.isArray(item?.sections)
+                    ? item.sections
+                    : String(item?.section || '').split(',').map((section) => section.trim()).filter(Boolean);
+                classMap.set(key, {
+                    id: String(item?.id || key.replace(/\s+/g, '-')),
+                    name,
+                    sections: sectionsFromClass
+                });
+            };
+
+            storedClasses.forEach(pushClass);
+
+            students.forEach((student) => {
+                const className = String(student?.classGrade || '').trim();
+                if (!className) return;
+                const key = normalizeText(className);
+                const existing = classMap.get(key) || {
+                    id: key.replace(/\s+/g, '-'),
+                    name: className,
+                    sections: []
+                };
+                const sectionName = String(student?.section || '').trim();
+                if (sectionName && !existing.sections.includes(sectionName)) {
+                    existing.sections.push(sectionName);
+                }
+                classMap.set(key, existing);
+            });
+
+            return Array.from(classMap.values()).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+        }
+
+        function getSectionsForClass(classItem) {
+            return Array.from(new Set((Array.isArray(classItem?.sections) ? classItem.sections : [])
+                .map((section) => String(section || '').trim())
+                .filter(Boolean)));
+        }
+
+        function setSectionNote(message) {
+            const note = document.getElementById('sectionSubjectNote');
+            if (note) note.textContent = message;
+        }
+
+        function renderClassOptions() {
+            const classSelect = document.getElementById('subjectClassSelect');
+            if (!classSelect) return;
+
+            const classes = getClassPool();
+            classSelect.innerHTML = '<option value="">Select class</option>';
+            classes.forEach((classItem) => {
+                const option = document.createElement('option');
+                option.value = classItem.id;
+                option.textContent = classItem.name;
+                classSelect.appendChild(option);
+            });
+        }
+
+        function getSelectedClassItem() {
+            const classId = document.getElementById('subjectClassSelect')?.value || '';
+            return getClassPool().find((item) => item.id === classId) || null;
+        }
+
+        function renderSectionOptions() {
+            const sectionSelect = document.getElementById('subjectSectionSelect');
+            const classItem = getSelectedClassItem();
+            if (!sectionSelect) return;
+
+            sectionSelect.innerHTML = '<option value="">Select section</option>';
+            if (!classItem) {
+                sectionSelect.disabled = true;
+                sectionSelect.innerHTML = '<option value="">Select class first</option>';
+                return;
+            }
+
+            const sections = getSectionsForClass(classItem);
+            sectionSelect.disabled = !sections.length;
+            if (!sections.length) {
+                sectionSelect.innerHTML = '<option value="">No sections found</option>';
+                setSectionNote(`No sections found for ${classItem.name}. Add sections in Classes first.`);
+                return;
+            }
+
+            sections.forEach((section) => {
+                const option = document.createElement('option');
+                option.value = section;
+                option.textContent = section;
+                sectionSelect.appendChild(option);
+            });
+            setSectionNote(`Available sections for ${classItem.name}: ${sections.join(', ')}`);
+        }
+
+        function createSubjectRow(subject = {}) {
+            const wrap = document.createElement('div');
+            wrap.className = 'subject-row';
+            wrap.innerHTML = `
+                <div class="field">
+                    <label>Subject</label>
+                    <input type="text" class="subject-name" placeholder="Subject name" value="${escapeHtml(subject.subject || '')}" required>
+                </div>
+                <div class="field">
+                    <label>Teacher</label>
+                    <input type="text" class="subject-teacher" placeholder="Teacher name" value="${escapeHtml(subject.teacherName || '')}">
+                </div>
+                <div class="field">
+                    <label>Room</label>
+                    <input type="text" class="subject-room" placeholder="Room" value="${escapeHtml(subject.room || '')}">
+                </div>
+                <div class="field">
+                    <label>Note</label>
+                    <input type="text" class="subject-note" placeholder="Optional note" value="${escapeHtml(subject.note || '')}">
+                </div>
+                <button type="button" class="remove-subject-btn" title="Remove subject">
+                    <i data-lucide="trash-2" width="16"></i>
+                </button>
+            `;
+            wrap.querySelector('.remove-subject-btn').addEventListener('click', () => {
+                const rows = document.getElementById('subjectRows');
+                if (!rows) return;
+                if (rows.children.length === 1) return;
+                wrap.remove();
+            });
+            return wrap;
+        }
+
+        function ensureSubjectRow() {
+            const rows = document.getElementById('subjectRows');
+            if (!rows) return;
+            if (!rows.children.length) {
+                rows.appendChild(createSubjectRow());
+            }
+        }
+
+        function addSubjectRow() {
+            const rows = document.getElementById('subjectRows');
+            if (!rows) return;
+            rows.appendChild(createSubjectRow());
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        function collectSubjectRows() {
+            return Array.from(document.querySelectorAll('#subjectRows .subject-row')).map((row) => ({
+                subject: String(row.querySelector('.subject-name')?.value || '').trim(),
+                teacherName: String(row.querySelector('.subject-teacher')?.value || '').trim(),
+                room: String(row.querySelector('.subject-room')?.value || '').trim(),
+                note: String(row.querySelector('.subject-note')?.value || '').trim()
+            })).filter((item) => item.subject);
+        }
+
+        function parseSectionSubjects(payload) {
+            if (!Array.isArray(payload)) return [];
+            return payload.map((item) => {
+                let subjects = item.subjects || [];
+                if (typeof subjects === 'string') {
+                    try {
+                        subjects = JSON.parse(subjects);
+                    } catch (_error) {
+                        subjects = [];
+                    }
+                }
+                return { ...item, subjects: Array.isArray(subjects) ? subjects : [] };
+            });
+        }
+
+        function getSavedSectionSubjects() {
+            return parseSectionSubjects(getStoredData(STORAGE_KEY_SECTION_SUBJECTS));
+        }
+
+        function sortRecords(records = []) {
+            return [...records].sort((a, b) => String(b.subjectDate || b.updatedAt || '').localeCompare(String(a.subjectDate || a.updatedAt || '')));
+        }
+
+        function renderSavedRecords() {
+            const host = document.getElementById('savedSectionSubjectsList');
+            if (!host) return;
+
+            const records = sortRecords(getSavedSectionSubjects());
+            if (!records.length) {
+                host.innerHTML = '<div class="empty-state">No section subjects saved yet.</div>';
+                return;
+            }
+
+            host.innerHTML = records.map((record) => {
+                const subjects = Array.isArray(record.subjects) ? record.subjects : [];
+                return `
+                    <article class="saved-item">
+                        <div class="saved-item-head">
+                            <div>
+                                <h3 style="margin:0 0 0.25rem;">${escapeHtml(record.classGrade || '-')} - ${escapeHtml(record.section || '-')}</h3>
+                                <p style="margin:0;color:var(--text-secondary);">${escapeHtml(record.subjectDate || '-')} ${record.createdAtLabel ? `| ${escapeHtml(record.createdAtLabel)}` : ''}</p>
+                            </div>
+                            <span class="saved-pill">${subjects.length} subject${subjects.length === 1 ? '' : 's'}</span>
+                        </div>
+                        ${record.notes ? `<div class="section-note">${escapeHtml(record.notes)}</div>` : ''}
+                        <table class="subject-table">
+                            <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Teacher</th>
+                                    <th>Room</th>
+                                    <th>Note</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${subjects.length ? subjects.map((subject) => `
+                                    <tr>
+                                        <td>${escapeHtml(subject.subject || '-')}</td>
+                                        <td>${escapeHtml(subject.teacherName || '-')}</td>
+                                        <td>${escapeHtml(subject.room || '-')}</td>
+                                        <td>${escapeHtml(subject.note || '-')}</td>
+                                    </tr>
+                                `).join('') : '<tr><td colspan="4" class="empty-state">No subjects stored.</td></tr>'}
+                            </tbody>
+                        </table>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        async function loadSavedSectionSubjects() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/section-subjects`, {
+                    headers: window.sessionStorage.getItem('eduCore_token')
+                        ? { Authorization: `Bearer ${window.sessionStorage.getItem('eduCore_token')}` }
+                        : {}
+                });
+                const result = await response.json().catch(() => ({}));
+                if (response.ok && result?.success && Array.isArray(result.sectionSubjects)) {
+                    localStorage.setItem(STORAGE_KEY_SECTION_SUBJECTS, JSON.stringify(result.sectionSubjects));
+                }
+            } catch (_error) {
+                // Keep cached records visible if the API is temporarily unavailable.
+            }
+            renderSavedRecords();
+        }
+
+        async function submitSectionSubjectForm(event) {
+            event.preventDefault();
+
+            const classItem = getSelectedClassItem();
+            const section = String(document.getElementById('subjectSectionSelect')?.value || '').trim();
+            const subjectDate = String(document.getElementById('subjectDate')?.value || '').trim();
+            const notes = String(document.getElementById('sectionNotes')?.value || '').trim();
+            const subjects = collectSubjectRows();
+
+            if (!classItem) return alert('Please select a class.');
+            if (!section) return alert('Please select a section.');
+            if (!subjectDate) return alert('Please select a date.');
+            if (!subjects.length) return alert('Please add at least one subject.');
+
+            const payload = {
+                classGrade: classItem.name,
+                section,
+                subjectDate,
+                notes,
+                subjects,
+                createdByName: 'Admin User',
+                createdByRole: 'Admin'
+            };
+
+            const token = window.sessionStorage.getItem('eduCore_token') || '';
+            const response = await fetch(`${API_BASE_URL}/section-subjects`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(token ? { Authorization: `Bearer ${token}` } : {})
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok || !result?.success) {
+                alert(result?.message || 'Section subjects could not be saved.');
+                return;
+            }
+
+            if (Array.isArray(result.sectionSubjects)) {
+                localStorage.setItem(STORAGE_KEY_SECTION_SUBJECTS, JSON.stringify(result.sectionSubjects));
+            }
+
+            alert('Section subjects saved successfully.');
+            document.getElementById('sectionSubjectForm')?.reset();
+            document.getElementById('subjectSectionSelect').disabled = true;
+            document.getElementById('subjectSectionSelect').innerHTML = '<option value="">Select class first</option>';
+            document.getElementById('subjectDate').value = new Date().toISOString().slice(0, 10);
+            document.getElementById('sectionNotes').value = '';
+            const rows = document.getElementById('subjectRows');
+            if (rows) {
+                rows.innerHTML = '';
+                rows.appendChild(createSubjectRow());
+            }
+            renderSavedRecords();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderClassOptions();
+            renderSectionOptions();
+            ensureSubjectRow();
+            document.getElementById('subjectDate').value = new Date().toISOString().slice(0, 10);
+            document.getElementById('subjectClassSelect')?.addEventListener('change', () => {
+                renderSectionOptions();
+            });
+            document.getElementById('addSubjectRowBtn')?.addEventListener('click', addSubjectRow);
+            document.getElementById('sectionSubjectForm')?.addEventListener('submit', submitSectionSubjectForm);
+            loadSavedSectionSubjects();
+            if (window.lucide) window.lucide.createIcons();
+        });
+    </script>
 </body>
 </html>
